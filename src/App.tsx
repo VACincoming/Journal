@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Suspense } from 'react'
+import './App.css'
+import './i18n'
+import Hello from './Hello'
+import ThankYou from './ThankYou'
+import LanguageSelector from './LanguageSelector'
+import LangSwitcher from './Components/LangSwitcher'
+const App = () => {
+    return (
+      <div>
+        <Suspense fallback={null}>
+          <LanguageSelector />
+          <LangSwitcher />
+          <Hello />
+          <ThankYou />
+        </Suspense>
+      </div>
+    )
 }
 
-export default App;
+export default App
