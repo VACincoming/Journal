@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import './login.css'
-//import Logo from '../../assets/logo.png'
-import { useTranslation } from 'react-i18next';
+import Logo from '../../assets/img/logo.png'
+import TextField from '@material-ui/core/TextField'
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -33,30 +33,58 @@ const useStyles = makeStyles(theme => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  textFieldData: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
 }));
 
 export default function SignIn(props:any) {
   const classes = useStyles(); 
-  const { t, i18n } = useTranslation();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-      { /* <img className='logo' src={Logo} alt="logo"></img> */ }
-        <Typography component="p" align="center" className='loginTitle'>
-          Welcome to the Students System Management <br/>
-          Please, log in with your email
-        </Typography>
+        <img className='logo' src={Logo} alt="logo"></img>
+        <h3 style={{textAlign: 'center'}}>Welcome to the Students System Management</h3>
+        <h3 style={{marginBottom: '0px'}}>Please Log in with your email or username</h3>
+        <TextField
+          id="standard-input"
+          label="Email/Username"
+          className={classes.textFieldData}
+          type="mail"
+          margin="normal"
+        />
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          className={classes.textFieldData}
+          type="password"
+          autoComplete="current-password"
+          margin="normal"
+        />
            <Button
             type="submit"
-            variant="outlined"
-            color="default"
+            variant="contained"
+            color="primary"
             className='submit'
-            style={{marginTop:'20px'}}
+            style={{marginTop:'20px', minWidth: '200px'}}
             onClick={() => console.log('login')}
           >
-            Sign in with Email
+            SIGN IN
           </Button>
+          <Link to='/registration'>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              className='submit'
+              style={{marginTop:'20px', minWidth: '200px'}}
+            >
+              Registration
+            </Button>
+          </Link>
       </div> 
     </Container>
   );

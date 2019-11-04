@@ -1,20 +1,23 @@
 import React, { Suspense } from 'react'
 import './App.css'
 import './i18n'
-import Hello from './Hello'
-import ThankYou from './ThankYou'
-import LanguageSelector from './LanguageSelector'
 import LangSwitcher from './Components/LangSwitcher'
+import Login from './Pages/Login'
+import Registration from './Pages/Registration'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+
 const App = () => {
     return (
-      <div>
-        <Suspense fallback={null}>
-          <LanguageSelector />
-          <LangSwitcher />
-          <Hello />
-          <ThankYou />
-        </Suspense>
-      </div>
+      <Router>
+        <Switch>
+          <Suspense fallback={null}>
+              <LangSwitcher />
+              <Route exact path='/'><Login /></Route>
+              <Route path='/registration'><Registration /></Route>
+              <Route path='/main'></Route>
+          </Suspense>
+        </Switch>
+      </Router>
     )
 }
 
