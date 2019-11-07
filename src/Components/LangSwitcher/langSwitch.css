@@ -1,4 +1,17 @@
 .langSwitcher{
   display: flex;
   justify-content: flex-end;
+  height: 78px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.langSwitcher > .MuiFormControl-root > .MuiInputBase-root{
+  color:#fff;
+}
+.langSwitcher > .MuiFormControl-root > .MuiInputBase-root > .MuiSelect-icon{
+  color: #fff;
+}
+.MuiInput-underline:before{
+  border-bottom: 0px !important;
 }

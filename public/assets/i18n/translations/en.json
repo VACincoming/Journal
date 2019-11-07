@@ -1,7 +1,7 @@
 {
-  "title.part1": "Welcome to the Students System Management",
-  "title.part2": "Please Log in with your email",
-  "button": "Sign in with Email",
   "password": "Password",
-  "login": "Email"
+  "login": "Email",
+  "GroupList": "Group List",
+  "MainPage": "Main Page",
+  "Shedule": "Shedule"
 }
