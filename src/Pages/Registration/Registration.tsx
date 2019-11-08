@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 export default function SignUp() {
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState('');
-  //const [isFilledFields, setIsFilledFields] = useState(false)
   let isFilledFields = false;
   let isPasswordMatch = true;
   let isActive = false;

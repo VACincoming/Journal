@@ -64,16 +64,17 @@ export default function SignIn(props:any) {
           autoComplete="current-password"
           margin="normal"
         />
-           <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className='submit'
-            style={{marginTop:'20px', minWidth: '200px'}}
-            onClick={() => console.log('login')}
-          >
+          <Link to='/main'>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className='submit'
+              style={{marginTop:'20px', minWidth: '200px'}}
+            >
             SIGN IN
-          </Button>
+            </Button>
+          </Link>
           <Link to='/registration'>
             <Button
               type="submit"

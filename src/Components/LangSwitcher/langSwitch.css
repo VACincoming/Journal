@@ -15,3 +15,10 @@
 .MuiInput-underline:before{
   border-bottom: 0px !important;
 }
+
+@media (max-width:480px){
+  .langSwitcher{
+    margin-left: 0;
+    margin-right: 0px;
+  }
+}

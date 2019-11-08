@@ -1,13 +1,17 @@
 import React from 'react'
-import './groupList.css'
 import Header from '../../Components/Header'
+import './main.css'
 import { useTranslation } from 'react-i18next'
 
-function GroupList(props:any){
+function Main(props:any){
   const { t } = useTranslation()
+ 
   return(
-    <Header title={t('GroupList')}/>
+    <React.Fragment>
+      <Header title={t('MainPage')}/>
+      <h1>Main</h1>
+    </React.Fragment>
   )
 }
 
-export default GroupList;
+export default Main
