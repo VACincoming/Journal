@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import GroupList from './Pages/GroupList'
 import Shedule from './Pages/Shedule'
 import Main from './Pages/Main'
+import AdminTools from './Pages/AdminTools'
 const App = () => {
     return (
       <Router>
@@ -17,6 +18,7 @@ const App = () => {
               <Route path='/main'>        <Main />        </Route>
               <Route path='/grouplist'>   <GroupList />   </Route>
               <Route path='/shedule'>     <Shedule />     </Route>
+              <Route path='/adminTools'>  <AdminTools />     </Route>
           </Suspense>
         </Switch>
       </Router>

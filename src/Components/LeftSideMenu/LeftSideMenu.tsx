@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 
 export default function LeftSideMenu(props:any) {
   const { t } = useTranslation()
-  const pages = [{link:'/main', text: t('MainPage')}, {link:'/groupList',text: t('GroupList')}, {link:'/shedule', text:t('Shedule')} ]
+  const pages = [{link:'/main', text: t('MainPage')}, {link:'/groupList',text: t('GroupList')}, {link:'/shedule', text:t('Shedule')}, {link: '/adminTools', text: t('AdminTools')}]
   const [state, setState] = useState({
     left: false,
   });

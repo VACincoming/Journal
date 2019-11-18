@@ -1,0 +1,12 @@
+
+.mainPageContent-wrapper{
+  margin-top: 50px !important;
+}
+.wrapperImg img{
+  width: 80%;
+  margin-bottom: 50px;
+  height: 300px;
+}
+.wrapperImg{
+  text-align: center;
+}
