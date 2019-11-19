@@ -4,8 +4,7 @@ import Grid from '@material-ui/core/Grid'
 function SheduleTable(props:any){
   const {day, pairs} = props
   return(
-      <Grid item xs={2}>
-        <div className='sheduleTableWrapper'>
+      <Grid item xl={2} lg={2} md={3} sm={4} xs={6} className='sheduleTableWrapper'>
           {day}
           <table>
             <tbody>
@@ -21,7 +20,6 @@ function SheduleTable(props:any){
               }
             </tbody>
           </table>
-        </div>
       </Grid>
   )
 }

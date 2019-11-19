@@ -8,21 +8,21 @@ import GroupList from './Pages/GroupList'
 import Shedule from './Pages/Shedule'
 import Main from './Pages/Main'
 import AdminTools from './Pages/AdminTools'
+import { withJournalService } from './hoc'
+
 const App = () => {
-    return (
-      <Router>
-        <Switch>
-          <Suspense fallback={null}>
-              <Route exact path='/'>      <Login />       </Route>
-              <Route path='/registration'><Registration /></Route>
-              <Route path='/main'>        <Main />        </Route>
-              <Route path='/grouplist'>   <GroupList />   </Route>
-              <Route path='/shedule'>     <Shedule />     </Route>
-              <Route path='/adminTools'>  <AdminTools />     </Route>
-          </Suspense>
-        </Switch>
-      </Router>
-    )
+  return (
+    <Switch>
+      <Suspense fallback={null}>
+          <Route exact path='/'>      <Login />       </Route>
+          <Route path='/registration'><Registration /></Route>
+          <Route path='/main'>        <Main />        </Route>
+          <Route path='/grouplist'>   <GroupList />   </Route>
+          <Route path='/shedule'>     <Shedule />     </Route>
+          <Route path='/adminTools'>  <AdminTools />  </Route>
+      </Suspense>
+    </Switch>
+  )
 }
 
-export default App
+export default withJournalService()(App)

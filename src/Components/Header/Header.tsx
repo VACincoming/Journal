@@ -7,7 +7,11 @@ import { loadCSS } from 'fg-loadcss';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
-
+import {useHistory} from 'react-router-dom'
+import { withJournalService } from '../../hoc';
+import {fetchUserRequest} from '../../actions'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 const useStyles = makeStyles({
   orangeAvatar: {
     margin: 10,
@@ -20,7 +24,12 @@ const useStyles = makeStyles({
 
 function Header(props:any){
   const classes = useStyles();
-  const {title, pages} = props
+  const {title, pages, fetchUserRequest} = props
+  let history = useHistory();
+  function logOut(){
+    fetchUserRequest()
+    history.push("/")
+  }
   React.useEffect(() => {
     loadCSS(
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
@@ -34,10 +43,20 @@ function Header(props:any){
       <div className='rightHeaderWrapper'>
         <Avatar className={classes.orangeAvatar}>AN</Avatar>
         <LangSwitcher />
-        <Icon className="fas fa-power-off"/>
+        <Icon className="fas fa-power-off pointer" onClick={logOut}/>
       </div>
     </div>
   )
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch:any) => {
+  return bindActionCreators({
+    fetchUserRequest: fetchUserRequest()
+  }, dispatch)
+}
+/* const mapStateToProps = ({user}:{user:any}) => {
+  return {user}
+} */
+
+export default withJournalService()(
+  connect(null, mapDispatchToProps)(Header))

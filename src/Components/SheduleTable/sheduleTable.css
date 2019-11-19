@@ -1,6 +1,8 @@
 .sheduleTableWrapper{
   background: #22272B;
   width: 90%;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
   height: 300px;
   color: #fff;
   display: flex;
@@ -8,6 +10,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 20px !important;
 }
 table{
   border-collapse: collapse;

@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next'
 function GroupList(){
   const { t } = useTranslation()
   return(
+    <>
     <Header title={t('GroupList')}/>
+    </>
   )
 }
 
