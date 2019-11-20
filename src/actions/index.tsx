@@ -1,5 +1,3 @@
-import JournalService from "../services/journal-service"
-
 const userLoaded = (newUser:any) => {
   return{
     type: 'FETCH_USER_SUCCESS',
@@ -11,12 +9,12 @@ const userRequest = () => {
     type: 'FETCH_USER_REQUEST'
   }
 }
-const userError = (err:any) => {
+/* const userError = (err:any) => {
   return{
     type: 'FETCH_USER_ERROR',
     payload: err
   }
-}
+} */
 
 const fetchUserLoaded = () => (user:any) => (dispatch:any) => {
   return dispatch(userLoaded(user))

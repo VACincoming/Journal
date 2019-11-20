@@ -3,7 +3,7 @@ import './App.css'
 import './i18n'
 import Login from './Pages/Login'
 import Registration from './Pages/Registration'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 import GroupList from './Pages/GroupList'
 import Shedule from './Pages/Shedule'
 import Main from './Pages/Main'

@@ -42,8 +42,8 @@ const useStyles = makeStyles(theme => ({
 export default function SignUp() {
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState('');
-  let isFilledFields = false;
-  let isPasswordMatch = true;
+/*   let isFilledFields = false;
+ */  let isPasswordMatch = true;
   let isActive = false;
   const [formData, setFormData] = useState({
     name: '',
@@ -53,9 +53,9 @@ export default function SignUp() {
     password: ''
   })
 
-  if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
+/*   if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
   isFilledFields = true;
-  } else isFilledFields = false;
+  } else isFilledFields = false; */
   if(confirmPassword.length > 1 && formData.password.length > 1 && confirmPassword === formData.password){
     isPasswordMatch = true;
   } else isPasswordMatch = false;
