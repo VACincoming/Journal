@@ -4,6 +4,7 @@ import Header from '../../Components/Header'
 import { useTranslation } from 'react-i18next'
 import SheduleTable from '../../Components/SheduleTable'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 function Shedule(props:any){
   const { t } = useTranslation()
   const data = [
@@ -11,7 +12,7 @@ function Shedule(props:any){
       "day": "Monday",
       "pairs": [
         {"name":null, "order": 1},
-        {"name":'TPP', "order": 2},
+        {"name":'TPP miheeeeed alexandr vladimirovich 1-311', "order": 2},
         {"name":'History', "order": 3},
         {"name":'Chemistry', "order": 4},
         {"name":null, "order": 5}
@@ -61,6 +62,20 @@ function Shedule(props:any){
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
+      <Grid container justify='center' direction='row' alignItems='center' className='buttonContainer'>
+        <Grid >
+          <Button 
+            className='changeWeekBtn'
+            >
+            EVEN WEEK
+          </Button>
+          <Button 
+            className='changeGroupBtn'
+            >
+            KI-161
+          </Button>
+        </Grid>
+      </Grid>
       <Grid container justify='center' direction='row' alignItems='center' className='tableContainer'>
         {
           data.map((el:any) => {

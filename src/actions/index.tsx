@@ -5,16 +5,14 @@ const userLoaded = (newUser:any) => {
   }
 }
 const userRequest = () => {
-  return{
-    type: 'FETCH_USER_REQUEST'
-  }
+  return{type: 'FETCH_USER_REQUEST'}
 }
-/* const userError = (err:any) => {
-  return{
-    type: 'FETCH_USER_ERROR',
-    payload: err
-  }
-} */
+const loaderOn = () => {
+  return {type: 'FETCH_LOADER_ON'}
+}
+const loaderOff = () => {
+  return {type: 'FETCH_LOADER_OFF'}
+}
 
 const fetchUserLoaded = () => (user:any) => (dispatch:any) => {
   return dispatch(userLoaded(user))
@@ -22,7 +20,15 @@ const fetchUserLoaded = () => (user:any) => (dispatch:any) => {
 const fetchUserRequest = () => () => (dispatch:any) => {
   return dispatch(userRequest())
 }
+const fetchLoaderOn = () => () => (dispatch:any) => {
+  return dispatch(loaderOn())
+}
+const fetchLoaderOff = () => () => (dispatch:any) => {
+  return dispatch(loaderOff())
+}
 export {
   fetchUserLoaded,
-  fetchUserRequest
+  fetchUserRequest,
+  fetchLoaderOn,
+  fetchLoaderOff
 }

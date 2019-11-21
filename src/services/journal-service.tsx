@@ -20,5 +20,19 @@ export default class JournalService{
       return res.data
     })
   }
-
+  signUp(data:any){
+    return axios({
+      method: 'post',
+      url: `${url}registration`,
+      headers: this.header,
+      data: data
+    })
+  }
+  getShedule(weekType:string){
+    return axios({
+      method: 'get',
+      url: `${url}shedule?ODD=${weekType}`,
+      headers: this.header
+    }).then((shedule) => console.log(shedule))
+  }
 }

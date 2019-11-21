@@ -4,6 +4,19 @@
   min-height: 100vh;
   height: 100%;
 }
-.tableContainer{
-  margin-top: 50px;
+
+.buttonContainer{
+  margin-top: 20px;
+}
+.changeGroupBtn{
+  background: #0064B5 !important;
+  min-width: 200px !important;
+  color: #fff !important;
+  border-radius: 0px !important;
+}
+.changeWeekBtn{
+  min-width: 200px !important;
+  background: rgba(0, 115, 108, 0.69) !important;
+  color: #fff !important;
+  border-radius: 0px !important;
 }

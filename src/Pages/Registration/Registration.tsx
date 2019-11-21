@@ -6,8 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link} from 'react-router-dom'
-
+import {Link, useHistory} from 'react-router-dom'
+import { withJournalService } from '../../hoc';
+import {fetchUserLoaded} from '../../actions'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -39,18 +42,26 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+function SignUp(props:any) {
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState('');
 /*   let isFilledFields = false;
  */  let isPasswordMatch = true;
   let isActive = false;
+  async function signUp(){
+    try{
+      let registration = await props.journalService.signUp(formData)
+      console.log(registration)
+    }catch(err){
+      console.log(err)
+    }
+  }
   const [formData, setFormData] = useState({
-    name: '',
-    lastName: '',
     email: '',
-    username: '',
-    password: ''
+    firstName: '',
+    lastName: '',
+    password: '',
+    username: ''
   })
 
 /*   if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
@@ -156,7 +167,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!isActive}
+            onClick={signUp}
           >
             Sign Up
           </Button>
@@ -172,3 +183,12 @@ export default function SignUp() {
     </Container>
   );
 }
+
+const mapDispatchToProps = (dispatch:any) => {
+  return bindActionCreators({
+    fetchUserLoaded: fetchUserLoaded()
+  }, dispatch)
+}
+
+
+export default withJournalService()(SignUp)
