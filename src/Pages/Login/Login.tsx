@@ -59,7 +59,7 @@ function SignIn(props:any) {
     fetchLoaderOn()
     try{
     let user = await props.journalService.signIn(login, password)
-    await fetchUserLoaded(user.data.username)
+    await fetchUserLoaded({"username": user.username, "roles": user.roles})
     fetchLoaderOff()
     history.push("/main")
     }catch(err){

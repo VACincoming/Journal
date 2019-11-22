@@ -16,8 +16,10 @@ export default class JournalService{
       url: `${url}login`,
       data: data
     }).then((res) => {
-      this.header.Authorization = res.data.token
-      return res.data
+      console.log(res.data)
+      localStorage.setItem("Token", res.data.data.token)
+      this.header.Authorization = res.data.data.token
+      return res.data.data
     })
   }
   signUp(data:any){
@@ -29,10 +31,13 @@ export default class JournalService{
     })
   }
   getShedule(weekType:string){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    console.log(this.header)
     return axios({
       method: 'get',
-      url: `${url}shedule?ODD=${weekType}`,
+      url: `${url}shedule?weekType=${weekType}`,
       headers: this.header
     }).then((shedule) => console.log(shedule))
+      .catch((err) => console.log)
   }
 }

@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import SheduleTable from '../../Components/SheduleTable'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import { withJournalService } from '../../hoc'
+import {connect} from 'react-redux'
 function Shedule(props:any){
   const { t } = useTranslation()
   const data = [
@@ -59,6 +61,14 @@ function Shedule(props:any){
       ]
     }
   ]
+  async function getShedule(){
+    try{
+      await props.journalService.getShedule('ODD')
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
@@ -66,6 +76,7 @@ function Shedule(props:any){
         <Grid >
           <Button 
             className='changeWeekBtn'
+            onClick={getShedule}
             >
             EVEN WEEK
           </Button>
@@ -89,4 +100,12 @@ function Shedule(props:any){
   )
 }
 
-export default Shedule;
+const mapStateToProps = (state:any) => {
+  if(state){
+    return{shedule: state.shedule}
+  }
+  return {state}
+}
+
+export default withJournalService()(
+  connect(mapStateToProps)(Shedule))

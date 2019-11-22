@@ -8,10 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
 import { useTranslation } from 'react-i18next'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-export default function LeftSideMenu(props:any) {
+function LeftSideMenu(props:any) {
   const { t } = useTranslation()
-  const pages = [{link:'/main', text: t('MainPage')}, {link:'/groupList',text: t('GroupList')}, {link:'/shedule', text:t('Shedule')}, {link: '/adminTools', text: t('AdminTools')}]
   const [state, setState] = useState({
     left: false,
   });
@@ -19,9 +19,10 @@ export default function LeftSideMenu(props:any) {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [side]: open });
   };
+  console.log(props)
+  //console.log(props.user.roles.filter((el:any) => el === 'ADMIN'))
   const sideList = (side:any) => (
     <div
       className='list'
@@ -30,16 +31,40 @@ export default function LeftSideMenu(props:any) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {pages.map((el:any, index:any) => (
-          <div key={el.text}>
-            <Link to={el.link}>
-            <ListItem button className='listItem'>
-              <ListItemText primary={el.text}/>
-            </ListItem>
+          <div>
+            <Link to='/main'>
+              <ListItem button className='listItem'>
+                <ListItemText primary={t('MainPage')}/>
+              </ListItem>
             </Link>
-            <Divider key={el.text} />
+            <Divider />
           </div>
-        ))}
+          <div>
+            <Link to='/groupList'>
+              <ListItem button className='listItem'>
+                <ListItemText primary={t('GroupList')}/>
+              </ListItem>
+            </Link>
+            <Divider />
+          </div>
+          <div>
+            <Link to='/shedule'>
+              <ListItem button className='listItem'>
+                <ListItemText primary={t('Shedule')}/>
+              </ListItem>
+            </Link>
+            <Divider />
+          </div>
+          { props.user && props.user.roles.filter((el:any) => el === 'ADMIN') &&
+            <div>
+              <Link to='/adminTools'>
+                <ListItem button className='listItem'>
+                  <ListItemText primary={t('AdminTools')}/>
+                </ListItem>
+              </Link>
+              <Divider />
+            </div>
+            }
       </List>
     </div>
   );
@@ -53,3 +78,12 @@ export default function LeftSideMenu(props:any) {
     </div>
   );
 }
+
+const mapStateToProps = (state:any) => {
+  if(state){
+    return {user: state.user}
+  }
+  return {state};
+}
+
+export default connect(mapStateToProps)(LeftSideMenu)
