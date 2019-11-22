@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link, useHistory} from 'react-router-dom'
 import { withJournalService } from '../../hoc';
-import {fetchUserLoaded} from '../../actions'
+import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
@@ -43,18 +43,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignUp(props:any) {
+  let history = useHistory();
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState('');
+  const {fetchLoaderOn, fetchLoaderOff, loading} = props
 /*   let isFilledFields = false;
  */  let isPasswordMatch = true;
   let isActive = false;
   async function signUp(){
+    fetchLoaderOn()
     try{
       let registration = await props.journalService.signUp(formData)
-      console.log(registration)
+      history.push("/ActivationPage")
     }catch(err){
       console.log(err)
     }
+    fetchLoaderOff()
   }
   const [formData, setFormData] = useState({
     email: '',
@@ -168,6 +172,7 @@ function SignUp(props:any) {
             color="primary"
             className={classes.submit}
             onClick={signUp}
+            disabled={loading}
           >
             Sign Up
           </Button>
@@ -186,9 +191,18 @@ function SignUp(props:any) {
 
 const mapDispatchToProps = (dispatch:any) => {
   return bindActionCreators({
-    fetchUserLoaded: fetchUserLoaded()
+    fetchUserLoaded: fetchUserLoaded(),
+    fetchLoaderOn: fetchLoaderOn(),
+    fetchLoaderOff: fetchLoaderOff(),
   }, dispatch)
 }
 
+const mapStateToProps = (state:any) => {
+  if(state){
+    return {loading: state.loading}
+  }
+  return {state}
+}
 
-export default withJournalService()(SignUp)
+export default withJournalService()(
+  connect(mapStateToProps, mapDispatchToProps)(SignUp))

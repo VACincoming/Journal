@@ -11,7 +11,6 @@ import { withJournalService } from '../../hoc';
 import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff, fetchUserRequest} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {compose} from '../../utils'
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
