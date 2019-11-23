@@ -6,8 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link} from 'react-router-dom'
-
+import {Link, useHistory} from 'react-router-dom'
+import { withJournalService } from '../../hoc';
+import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff} from '../../actions'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -39,23 +42,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+function SignUp(props:any) {
+  let history = useHistory();
   const classes = useStyles();
   const [confirmPassword, setConfirmPassword] = useState('');
-  let isFilledFields = false;
-  let isPasswordMatch = true;
+  const {fetchLoaderOn, fetchLoaderOff, loading} = props
+/*   let isFilledFields = false;
+ */  let isPasswordMatch = true;
   let isActive = false;
+  async function signUp(){
+    fetchLoaderOn()
+    try{
+      let registration = await props.journalService.signUp(formData)
+      history.push("/ActivationPage")
+    }catch(err){
+      console.log(err)
+    }
+    fetchLoaderOff()
+  }
   const [formData, setFormData] = useState({
-    name: '',
-    lastName: '',
     email: '',
-    username: '',
-    password: ''
+    firstName: '',
+    lastName: '',
+    password: '',
+    username: ''
   })
 
-  if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
+/*   if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
   isFilledFields = true;
-  } else isFilledFields = false;
+  } else isFilledFields = false; */
   if(confirmPassword.length > 1 && formData.password.length > 1 && confirmPassword === formData.password){
     isPasswordMatch = true;
   } else isPasswordMatch = false;
@@ -156,7 +171,8 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!isActive}
+            onClick={signUp}
+            disabled={loading}
           >
             Sign Up
           </Button>
@@ -172,3 +188,21 @@ export default function SignUp() {
     </Container>
   );
 }
+
+const mapDispatchToProps = (dispatch:any) => {
+  return bindActionCreators({
+    fetchUserLoaded: fetchUserLoaded(),
+    fetchLoaderOn: fetchLoaderOn(),
+    fetchLoaderOff: fetchLoaderOff(),
+  }, dispatch)
+}
+
+const mapStateToProps = (state:any) => {
+  if(state){
+    return {loading: state.loading}
+  }
+  return {state}
+}
+
+export default withJournalService()(
+  connect(mapStateToProps, mapDispatchToProps)(SignUp))

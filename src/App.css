@@ -3,6 +3,10 @@ body, html{
   padding: 0;
   text-decoration: none;
   font-family: "Roboto";
+  box-sizing: border-box;
+}
+body{
+  background: #A6D3EC;
 }
 *{
   box-sizing: border-box;

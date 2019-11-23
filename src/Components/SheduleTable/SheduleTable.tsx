@@ -1,66 +1,26 @@
 import React from 'react'
 import './sheduleTable.css'
-
+import Grid from '@material-ui/core/Grid'
 function SheduleTable(props:any){
+  const {day, pairs} = props
   return(
-    <table>
-      <tr>
-        <th style={{textAlign: 'center'}}>
-          Shedule
-        </th>
-      </tr>
-      <tr>
-        <tr>
-          <td>
-            Monday
-          </td>
-          <tr>
-            <td>
-              1
-            </td>
-            <td>
-              <p>TPP <br/> zador 1-319</p>
-            </td>
-            <td>
-              Programing stas 1-222
-            </td>
-          </tr>
-          <tr>
-            <td>
-              2
-            </td>
-            <td>
-              <p>TPP <br/> zador 1-319</p>
-            </td>
-            <td>
-              Programing stas 1-222
-            </td>
-          </tr>
-          <tr>
-            <td>
-              3
-            </td>
-            <td>
-              <p>TPP <br/> zador 1-319</p>
-            </td>
-            <td>
-              Programing stas 1-222
-            </td>
-          </tr>
-          <tr>
-            <td>
-              4
-            </td>
-            <td>
-              <p>TPP <br/> zador 1-319</p>
-            </td>
-            <td>
-              Programing stas 1-222
-            </td>
-          </tr>
-        </tr>
-      </tr>
-    </table>
+      <Grid item xl={2} lg={2} md={3} sm={4} xs={6} className='sheduleTableWrapper'>
+          {day}
+          <table>
+            <tbody>
+              {
+                pairs.map((el:any, index:number) => {
+                  return(
+                    <tr key={el.order}>
+                      <td>{el.order}</td>
+                      <td>{el.name}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+      </Grid>
   )
 }
 

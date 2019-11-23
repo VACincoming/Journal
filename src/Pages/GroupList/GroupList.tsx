@@ -3,10 +3,12 @@ import './groupList.css'
 import Header from '../../Components/Header'
 import { useTranslation } from 'react-i18next'
 
-function GroupList(props:any){
+function GroupList(){
   const { t } = useTranslation()
   return(
+    <>
     <Header title={t('GroupList')}/>
+    </>
   )
 }
 

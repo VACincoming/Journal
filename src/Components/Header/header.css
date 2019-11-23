@@ -1,5 +1,6 @@
 .headerWrapper{
   display: flex;
+  width: 100%;
   justify-content: space-between;
   padding-left: 1%;
   padding-right: 1%;
@@ -12,4 +13,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.pointer:hover{
+  cursor:pointer;
 }
