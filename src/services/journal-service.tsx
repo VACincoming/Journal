@@ -16,7 +16,6 @@ export default class JournalService{
       url: `${url}login`,
       data: data
     }).then((res) => {
-      console.log(res.data)
       localStorage.setItem("Token", res.data.data.token)
       this.header.Authorization = res.data.data.token
       return res.data.data
@@ -30,14 +29,28 @@ export default class JournalService{
       data: data
     })
   }
-  getShedule(weekType:string){
+  getSchedule(weekType:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
-    console.log(this.header)
     return axios({
       method: 'get',
-      url: `${url}shedule?weekType=${weekType}`,
+      url: `${url}schedule?weekType=${weekType}`,
       headers: this.header
-    }).then((shedule) => console.log(shedule))
-      .catch((err) => console.log)
+    }).catch((err) => console.log(err))
+  }
+  getScheduleTime(){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'get',
+      url: `${url}schedule/time`,
+      headers: this.header
+    }).catch((err) => console.log(err))
+  }
+  getUser(){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'get',
+      url: `${url}users/current`,
+      headers: this.header
+    }).catch((err) => console.log(err))
   }
 }

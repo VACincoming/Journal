@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './leftSideMenu.css'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -9,6 +9,9 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { useTranslation } from 'react-i18next'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { fetchGetUser } from '../../actions';
+import { withJournalService } from '../../hoc'
 
 function LeftSideMenu(props:any) {
   const { t } = useTranslation()
@@ -21,7 +24,10 @@ function LeftSideMenu(props:any) {
     }
     setState({ ...state, [side]: open });
   };
-  console.log(props)
+  const { fetchGetUser } = props
+  useEffect(() => {
+    fetchGetUser()
+  },[fetchGetUser])
   //console.log(props.user.roles.filter((el:any) => el === 'ADMIN'))
   const sideList = (side:any) => (
     <div
@@ -48,14 +54,14 @@ function LeftSideMenu(props:any) {
             <Divider />
           </div>
           <div>
-            <Link to='/shedule'>
+            <Link to='/schedule'>
               <ListItem button className='listItem'>
-                <ListItemText primary={t('Shedule')}/>
+                <ListItemText primary={t('Schedule')}/>
               </ListItem>
             </Link>
             <Divider />
           </div>
-          { props.user && props.user.roles.filter((el:any) => el === 'ADMIN') &&
+          { props.user && props.user.roles && props.user.roles.filter((el:any) => el === 'ADMIN') &&
             <div>
               <Link to='/adminTools'>
                 <ListItem button className='listItem'>
@@ -78,7 +84,12 @@ function LeftSideMenu(props:any) {
     </div>
   );
 }
-
+const mapDispatchToProps =(dispatch:any, ownProps:any) => {
+  const { journalService } = ownProps
+  return bindActionCreators({
+    fetchGetUser: fetchGetUser(journalService)
+  }, dispatch)
+}
 const mapStateToProps = (state:any) => {
   if(state){
     return {user: state.user}
@@ -86,4 +97,5 @@ const mapStateToProps = (state:any) => {
   return {state};
 }
 
-export default connect(mapStateToProps)(LeftSideMenu)
+export default withJournalService()(
+  connect(mapStateToProps, mapDispatchToProps)(LeftSideMenu))

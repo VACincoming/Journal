@@ -1,22 +1,19 @@
 import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
-
+import {connect} from 'react-redux'
 const ProtectedRoute = (data:any) => {
-  const { Component, props, ...rest} = data
+  const { Component, props, user, ...rest} = data
   function checkAuth(location:any){
-    let role = localStorage.getItem('role');
-    let isUser = Number(role) === 0;
-    let isAdmin = Number(role) === 1;
-    let isSuperAdmin = Number(role) === 2;
-    if((isAdmin || isSuperAdmin) && (location.pathname === "/adminCatalog" || location.pathname === "/adminDashboard")) return true 
-    else if(isSuperAdmin && location.pathname === '/adminTools') return true
-    else if(isUser && (location.pathname === "/userCatalog" || location.pathname === "/userDashboard"))  return true
-    else return false
+    let roles = user ? user.roles : null
+    if(roles && roles.includes("ADMIN") && location.pathname === "/adminTools") return true
+    else if(roles && !(roles.includes("ADMIN") || roles.includes("MONITOR") || roles.includes("STUDENT")))return false
+    else if (location.pathname !== "/adminTools") return true
   }
   return(
     <Route 
       {...rest}
       render = {(props) => {
+        console.log('asd')
         if(checkAuth(props.location)){
           return <Component />
         }else{
@@ -36,4 +33,11 @@ const ProtectedRoute = (data:any) => {
   )
 }
 
-export default ProtectedRoute
+const mapStateToProps = (state:any) => {
+  if(state){
+    return {user:state.user}
+  }
+  return {state}
+}
+
+export default connect(mapStateToProps)(ProtectedRoute)

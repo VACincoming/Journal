@@ -1,11 +1,25 @@
 const initialState = {
   user: [],
   loading: true,
-  error: null
+  error: null,
+  schedule: [],
+  scheduleTime: []
 }
 
 const reducer = (state:any = initialState, action:any) => {
   switch(action.type){
+    case 'FETCH_SCHEDULE_TIME_SUCCESS':
+      return{
+        ...state,
+        scheduleTime: action.payload,
+        error: null
+      }
+    case 'FETCH_SCHEDULE_SUCCESS':
+      return{
+        ...state,
+        schedule: action.payload,
+        error:null
+      }
     case 'FETCH_LOADER_ON':
       return{
         ...state,

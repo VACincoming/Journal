@@ -1,10 +1,10 @@
 import React from 'react'
-import './sheduleTable.css'
+import './scheduleTable.css'
 import Grid from '@material-ui/core/Grid'
-function SheduleTable(props:any){
+function ScheduleTable(props:any){
   const {day, pairs} = props
   return(
-      <Grid item xl={2} lg={2} md={3} sm={4} xs={6} className='sheduleTableWrapper'>
+      <Grid item xl={2} lg={2} md={3} sm={4} xs={6} className='scheduleTableWrapper'>
           {day}
           <table>
             <tbody>
@@ -24,4 +24,4 @@ function SheduleTable(props:any){
   )
 }
 
-export default SheduleTable
+export default ScheduleTable
