@@ -19,7 +19,17 @@ const scheduleSuccess = (schedule:any) => {
 const scheduleTimeSuccess = (scheduleTime:any) => {
   return {type: 'FETCH_SCHEDULE_TIME_SUCCESS', payload: scheduleTime}
 } 
+const allUsersLoaded = (newUsers:any) => {
+  return{
+    type: 'FETCH_ALL_USERS_SUCCESS',
+    payload: newUsers
+  }
+}
 
+const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
+  return journalService.getAllUsers()
+    .then((users:any) => dispatch(allUsersLoaded(users)))
+}
 const fetchGetUser = (journalService:any) => () => (dispatch:any) => {
   return journalService.getUser()
     .then((user:any) => dispatch(userLoaded(user.data.data))
@@ -48,6 +58,7 @@ const fetchLoaderOff = () => () => (dispatch:any) => {
 }
 export {
   fetchScheduleTime,
+  fetchGetAllUsers,
   fetchGetUser,
   fetchSchedule,
   fetchUserLoaded,

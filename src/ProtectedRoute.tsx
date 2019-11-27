@@ -13,7 +13,6 @@ const ProtectedRoute = (data:any) => {
     <Route 
       {...rest}
       render = {(props) => {
-        console.log('asd')
         if(checkAuth(props.location)){
           return <Component />
         }else{

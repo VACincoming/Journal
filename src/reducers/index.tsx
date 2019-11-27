@@ -1,5 +1,6 @@
 const initialState = {
   user: [],
+  users: [],
   loading: true,
   error: null,
   schedule: [],
@@ -29,6 +30,12 @@ const reducer = (state:any = initialState, action:any) => {
       return{
         ...state,
         loading: false
+      }
+    case 'FETCH_ALL_USERS_SUCCESS':
+      return{
+        ...state,
+        users: action.payload,
+        error: null
       }
     case 'FETCH_USER_SUCCESS':
       return{

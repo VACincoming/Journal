@@ -53,4 +53,13 @@ export default class JournalService{
       headers: this.header
     }).catch((err) => console.log(err))
   }
+  getAllUsers(){
+    console.log(this.header)
+    return axios({
+      method: 'get',
+      url: `${url}users`,
+      headers: this.header
+    }).then((users:any) => {return users.data.data})
+      .catch((err) => console.log(err))
+  }
 }

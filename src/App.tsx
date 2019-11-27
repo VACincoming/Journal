@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import './App.css'
 import './i18n'
 import Login from './Pages/Login'
@@ -12,21 +12,53 @@ import { withJournalService } from './hoc'
 import ActivationPage from './Pages/ActiovationPage'
 import SuccessActivation from './Pages/SuccessActivation'
 import ProtectedRoute from './ProtectedRoute'
-const App = () => {
+import { bindActionCreators } from 'redux'
+import { fetchGetUser, fetchLoaderOn, fetchLoaderOff } from './actions'
+import {connect} from 'react-redux'
+
+const App = (props:any) => {
+  const {fetchGetUser, fetchLoaderOn, fetchLoaderOff, loading} = props
+  useEffect(() => {
+    fetchLoaderOn()
+    fetchGetUser().then(() => fetchLoaderOff())
+  }, [fetchLoaderOn, fetchGetUser, fetchLoaderOff])
   return (
     <Switch>
       <Suspense fallback={null}>
-          <Route exact path='/'><Login /></Route>
-          <ProtectedRoute path='/registration' Component={Registration}/>
-          <ProtectedRoute path='/main' Component={Main}/>
-          <ProtectedRoute path='/grouplist' Component={GroupList}/>
-          <ProtectedRoute path='/schedule' Component={Schedule}/>
-          <ProtectedRoute path='/adminTools' Component={AdminTools}/>
-          <Route path='/activationPage'><ActivationPage/></Route>
-          <Route path='/successActivation'><SuccessActivation/></Route>
+          { loading === false ? 
+          <>
+            <Route exact path='/'><Login /></Route>
+            <ProtectedRoute path='/registration' Component={Registration}/>
+            <ProtectedRoute path='/main' Component={Main}/>
+            <ProtectedRoute path='/grouplist' Component={GroupList}/>
+            <ProtectedRoute path='/schedule' Component={Schedule}/>
+            <ProtectedRoute path='/adminTools' Component={AdminTools}/>
+            <Route path='/activationPage'><ActivationPage/></Route>
+            <Route path='/successActivation'><SuccessActivation/></Route>
+          </> : <h1>Loading</h1>
+          }
       </Suspense>
     </Switch>
   )
 }
 
-export default withJournalService()(App)
+const mapStateToProps = (state:any) => {
+  if(state){
+    return {
+      user: state.user,
+      loading: state.loading
+    }
+  }
+  return {state}
+}
+
+const mapDispatchToProps = (dispatch:any, ownProps:any) => {
+  const {journalService} = ownProps;
+  return bindActionCreators({
+    fetchGetUser: fetchGetUser(journalService),
+    fetchLoaderOff: fetchLoaderOff(),
+    fetchLoaderOn: fetchLoaderOn()
+  }, dispatch)
+}
+
+export default withJournalService()(connect(mapStateToProps, mapDispatchToProps)(App))

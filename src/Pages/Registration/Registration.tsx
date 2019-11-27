@@ -49,11 +49,11 @@ function SignUp(props:any) {
   const {fetchLoaderOn, fetchLoaderOff, loading} = props
 /*   let isFilledFields = false;
  */  let isPasswordMatch = true;
-  let isActive = false;
+  //let isActive = false;
   async function signUp(){
     fetchLoaderOn()
     try{
-      let registration = await props.journalService.signUp(formData)
+      await props.journalService.signUp(formData)
       history.push("/ActivationPage")
     }catch(err){
       console.log(err)

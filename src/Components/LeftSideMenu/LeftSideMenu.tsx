@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import './leftSideMenu.css'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -9,8 +9,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { useTranslation } from 'react-i18next'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux';
-import { fetchGetUser } from '../../actions';
 import { withJournalService } from '../../hoc'
 
 function LeftSideMenu(props:any) {
@@ -24,11 +22,6 @@ function LeftSideMenu(props:any) {
     }
     setState({ ...state, [side]: open });
   };
-  const { fetchGetUser } = props
-  useEffect(() => {
-    fetchGetUser()
-  },[fetchGetUser])
-  //console.log(props.user.roles.filter((el:any) => el === 'ADMIN'))
   const sideList = (side:any) => (
     <div
       className='list'
@@ -84,12 +77,7 @@ function LeftSideMenu(props:any) {
     </div>
   );
 }
-const mapDispatchToProps =(dispatch:any, ownProps:any) => {
-  const { journalService } = ownProps
-  return bindActionCreators({
-    fetchGetUser: fetchGetUser(journalService)
-  }, dispatch)
-}
+
 const mapStateToProps = (state:any) => {
   if(state){
     return {user: state.user}
@@ -98,4 +86,4 @@ const mapStateToProps = (state:any) => {
 }
 
 export default withJournalService()(
-  connect(mapStateToProps, mapDispatchToProps)(LeftSideMenu))
+  connect(mapStateToProps)(LeftSideMenu))
