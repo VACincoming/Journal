@@ -6,12 +6,15 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import { withJournalService } from '../../hoc';
 import { fetchGetAllUsers } from '../../actions'
+import { useTranslation } from 'react-i18next'
+
 function EditMemberList(props:any){
   let listItem = null;
+  const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
   const {fetchGetAllUsers, users} = props
   const member = [
-    "MONITORS","STUDENTS"
+    t("Monitors"),t("Students")
   ]
   const handleOpenEditMemberModal = () => {
     setOpenEditMemberModal(true)

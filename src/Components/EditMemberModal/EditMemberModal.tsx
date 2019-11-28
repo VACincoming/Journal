@@ -1,7 +1,6 @@
 import React from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import './editMemberModal.css'
-import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button';
 
 function EditMemberModal(props:any){

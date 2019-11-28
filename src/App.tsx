@@ -15,12 +15,14 @@ import ProtectedRoute from './ProtectedRoute'
 import { bindActionCreators } from 'redux'
 import { fetchGetUser, fetchLoaderOn, fetchLoaderOff } from './actions'
 import {connect} from 'react-redux'
-
+import Spinner from './Components/Spinner'
 const App = (props:any) => {
   const {fetchGetUser, fetchLoaderOn, fetchLoaderOff, loading} = props
   useEffect(() => {
-    fetchLoaderOn()
-    fetchGetUser().then(() => fetchLoaderOff())
+    if(localStorage.getItem("Token")){
+      fetchLoaderOn()
+      fetchGetUser().then(() => fetchLoaderOff())
+    }else fetchLoaderOff()
   }, [fetchLoaderOn, fetchGetUser, fetchLoaderOff])
   return (
     <Switch>
@@ -35,7 +37,7 @@ const App = (props:any) => {
             <ProtectedRoute path='/adminTools' Component={AdminTools}/>
             <Route path='/activationPage'><ActivationPage/></Route>
             <Route path='/successActivation'><SuccessActivation/></Route>
-          </> : <h1>Loading</h1>
+          </> : <Spinner/>
           }
       </Suspense>
     </Switch>

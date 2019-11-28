@@ -1,8 +1,10 @@
 .wrapperEditMember{
   width: 600px;
-  background: #22272B;
+  background: #A6D3EC;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  padding: 10px;
 }

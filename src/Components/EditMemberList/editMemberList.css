@@ -1,8 +1,9 @@
 .listItemWrapper{
+  margin: 5px;
   background: #22272B;
   height: 100px;
   border-radius: 10px;
-  width: 100%;
+  width: 95%;
   display: flex;
   padding-left: 10%;
   padding-right: 10%;
