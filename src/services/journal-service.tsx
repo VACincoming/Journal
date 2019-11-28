@@ -57,11 +57,7 @@ export default class JournalService{
     console.log(this.header)
     return axios({
       method: 'get',
-<<<<<<< HEAD
-      url: `${url}schedule?weekType=${weekType}`,
-=======
       url: `${url}users`,
->>>>>>> 48233c751b41673f9446f4106c3db127f41c592d
       headers: this.header
     }).then((users:any) => {return users.data.data})
       .catch((err) => console.log(err))
