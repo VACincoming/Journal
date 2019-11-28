@@ -51,9 +51,7 @@ function SignIn(props:any) {
   const [password, setPassword] = useState('')
   const {fetchUserLoaded, fetchLoaderOff, fetchLoaderOn} = props
   React.useEffect(() => {
-    fetchLoaderOn()
     fetchUserRequest()
-    fetchLoaderOff()
   }, [])
   async function signIn(){
     fetchLoaderOn()

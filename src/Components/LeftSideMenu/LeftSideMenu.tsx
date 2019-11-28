@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { useTranslation } from 'react-i18next'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { withJournalService } from '../../hoc'
 
 function LeftSideMenu(props:any) {
   const { t } = useTranslation()
@@ -21,8 +22,6 @@ function LeftSideMenu(props:any) {
     }
     setState({ ...state, [side]: open });
   };
-  console.log(props)
-  //console.log(props.user.roles.filter((el:any) => el === 'ADMIN'))
   const sideList = (side:any) => (
     <div
       className='list'
@@ -48,14 +47,14 @@ function LeftSideMenu(props:any) {
             <Divider />
           </div>
           <div>
-            <Link to='/shedule'>
+            <Link to='/schedule'>
               <ListItem button className='listItem'>
-                <ListItemText primary={t('Shedule')}/>
+                <ListItemText primary={t('Schedule')}/>
               </ListItem>
             </Link>
             <Divider />
           </div>
-          { props.user && props.user.roles.filter((el:any) => el === 'ADMIN') &&
+          { props.user && props.user.roles && props.user.roles.filter((el:any) => el === 'ADMIN') &&
             <div>
               <Link to='/adminTools'>
                 <ListItem button className='listItem'>
@@ -86,4 +85,5 @@ const mapStateToProps = (state:any) => {
   return {state};
 }
 
-export default connect(mapStateToProps)(LeftSideMenu)
+export default withJournalService()(
+  connect(mapStateToProps)(LeftSideMenu))

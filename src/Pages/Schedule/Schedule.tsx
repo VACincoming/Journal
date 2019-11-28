@@ -1,14 +1,18 @@
-import React from 'react'
-import './shedule.css'
+import React, {useState ,useEffect} from 'react'
+import './schedule.css'
 import Header from '../../Components/Header'
 import { useTranslation } from 'react-i18next'
-import SheduleTable from '../../Components/SheduleTable'
+import ScheduleTable from '../../Components/ScheduleTable'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { withJournalService } from '../../hoc'
 import {connect} from 'react-redux'
-function Shedule(props:any){
+import {fetchSchedule, fetchScheduleTime} from '../../actions'
+import { bindActionCreators } from 'redux'
+import ScheduleTimeTable from '../../Components/ScheduleTimeTable'
+function Schedule(props:any){
   const { t } = useTranslation()
+  const [weekType, setWeekType] = useState('ODD')
   const data = [
     {
       "day": "Monday",
@@ -61,14 +65,25 @@ function Shedule(props:any){
       ]
     }
   ]
-  async function getShedule(){
-    try{
-      await props.journalService.getShedule('ODD')
-    }
-    catch(err){
-      console.log(err)
-    }
+  const scheduleTime = [
+    {"id": 1, "data": "08:00 - 09:20"},
+    {"id": 2, "data": "09:00 - 10:20"},
+    {"id": 3, "data": "10:00 - 11:20"},
+    {"id": 4, "data": "11:00 - 12:20"},
+    {"id": 5, "data": "12:00 - 13:20"}
+  ]
+  const {fetchSchedule, fetchScheduleTime} = props
+  const changeWeek = () => {
+    if(weekType === 'ODD') setWeekType('EVEN')
+    else setWeekType('ODD')
   }
+  useEffect(() => {
+    fetchSchedule(weekType)
+  },[fetchSchedule, weekType])
+  useEffect(() => {
+    fetchScheduleTime()
+  }, [fetchScheduleTime])
+  
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
@@ -76,9 +91,9 @@ function Shedule(props:any){
         <Grid >
           <Button 
             className='changeWeekBtn'
-            onClick={getShedule}
+            onClick={changeWeek}
             >
-            EVEN WEEK
+            {weekType} WEEK
           </Button>
           <Button 
             className='changeGroupBtn'
@@ -89,23 +104,34 @@ function Shedule(props:any){
       </Grid>
       <Grid container justify='center' direction='row' alignItems='center' className='tableContainer'>
         {
-          data.map((el:any) => {
+          data && data.map((el:any) => {
             return(
-              <SheduleTable key={el.day} day={el.day} pairs={el.pairs}/>
+              <ScheduleTable key={el.day} day={el.day} pairs={el.pairs}/>
             )
           })
         }
+        <ScheduleTimeTable scheduleTime={scheduleTime}/>
       </Grid>
     </div>
   )
 }
 
+const mapDispatchToProps = (dispatch:any, ownProps:any) => {
+  const { journalService } = ownProps
+  return bindActionCreators({
+    fetchSchedule: fetchSchedule(journalService),
+    fetchScheduleTime: fetchScheduleTime(journalService)
+  }, dispatch)
+}
 const mapStateToProps = (state:any) => {
   if(state){
-    return{shedule: state.shedule}
+    return{
+      schedule: state.schedule,
+      scheduleTime: state.scheduleTime
+    }
   }
   return {state}
 }
 
 export default withJournalService()(
-  connect(mapStateToProps)(Shedule))
+  connect(mapStateToProps, mapDispatchToProps)(Schedule))

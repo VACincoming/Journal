@@ -1,0 +1,8 @@
+.wrapperEditMember{
+  width: 600px;
+  background: #22272B;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
