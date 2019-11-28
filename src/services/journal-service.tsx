@@ -35,7 +35,7 @@ export default class JournalService{
     console.log(this.header)
     return axios({
       method: 'get',
-      url: `${url}shedule?weekType=${weekType}`,
+      url: `${url}schedule?weekType=${weekType}`,
       headers: this.header
     }).then((shedule) => console.log(shedule))
       .catch((err) => console.log)
