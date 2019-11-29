@@ -1,6 +1,6 @@
 import axios from 'axios'
-const url = `${process.env.REACT_APP_URL_API}`
 
+const url = `${process.env.REACT_APP_URL_API}`
 export default class JournalService{
   header = {
     "Authorization": ''
@@ -51,7 +51,11 @@ export default class JournalService{
       method: 'get',
       url: `${url}users/current`,
       headers: this.header
-    }).catch((err) => console.log(err))
+    }).catch((err) => {
+      if(err.toString().includes('401')){
+        localStorage.removeItem("Token")
+      }
+    })
   }
   getAllUsers(){
     console.log(this.header)

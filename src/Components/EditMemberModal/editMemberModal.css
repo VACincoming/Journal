@@ -1,10 +1,38 @@
 .wrapperEditMember{
-  width: 600px;
-  background: #A6D3EC;
+  max-width: 100%;
+  background: #22272B;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   padding: 10px;
+  padding-bottom: 50px;
+}
+.blueBtn{
+  background: #4B97E2 !important;
+  color: #fff !important;
+}
+.MuiPaper-rounded{
+  border-radius: 0px !important;
+}
+.MuiDialog-container > .MuiDialog-paperWidthSm{
+  max-width: 60% !important;
+  width: 60% !important;
+}
+
+.wrapperEditMember > .MuiFormControl-root{
+  width: 95% !important;
+  margin-bottom: 10px;
+}
+
+.wrapperEditMember > .MuiFormControl-root > label{
+  color: #fff;
+}
+
+@media (max-width: 700px){
+  .MuiDialog-container > .MuiDialog-paperWidthSm{
+    max-width: 90% !important;
+    width: 90% !important;
+  }
 }

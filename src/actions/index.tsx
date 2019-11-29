@@ -31,9 +31,9 @@ const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
     .then((users:any) => dispatch(allUsersLoaded(users)))
 }
 const fetchGetUser = (journalService:any) => () => (dispatch:any) => {
-  return journalService.getUser()
-    .then((user:any) => dispatch(userLoaded(user.data.data))
-  )
+    return journalService.getUser()
+      .then((user:any) => dispatch(userLoaded(user.data.data)))
+      .catch(() => null)
 }
 const fetchSchedule = (journalService:any) => (weekType:string) => (dispatch:any) => {
   return journalService.getSchedule(weekType)

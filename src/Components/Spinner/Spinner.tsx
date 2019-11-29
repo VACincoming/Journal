@@ -8,6 +8,9 @@ const useStyles = makeStyles(theme => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
+    justifyContent:"center",
+    alignItems: 'center',
+    height: "80vh"
   },
 }));
 export default function Spinner(){
@@ -26,7 +29,7 @@ export default function Spinner(){
   }, []);
 
   return (
-    <div className={classes.root} style={{width:"100%", textAlign: 'center' }}>
+    <div className={classes.root}>
       <CircularProgress variant="determinate" value={progress} color="secondary" />
     </div>
   );

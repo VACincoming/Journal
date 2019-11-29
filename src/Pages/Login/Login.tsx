@@ -62,6 +62,8 @@ function SignIn(props:any) {
     history.push("/main")
     }catch(err){
       console.log(err)
+      history.push("/")
+      fetchLoaderOff()
     }
   }
   return (
