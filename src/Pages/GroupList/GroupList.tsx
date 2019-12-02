@@ -10,9 +10,9 @@ import {connect} from 'react-redux'
 
 function GroupList(props:any){
   const { t } = useTranslation()
-  const {fetchGetAllUsers, fetchSchedule, users, schedule, loading} = props
+  const {fetchGetAllUsers, fetchSchedule, users, schedule} = props
   const [weekType, setWeekType] = useState('ODD')
-  const changeWeek = () => {
+  const changeWeek = ():void => {
     if(weekType === 'ODD'){
       setWeekType("EVEN")
       fetchSchedule(weekType)

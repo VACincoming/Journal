@@ -49,21 +49,21 @@ function SignIn(props:any) {
   const classes = useStyles(); 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const {fetchUserLoaded, fetchLoaderOff, fetchLoaderOn} = props
+  const [isError, setIsError] = useState(false)
+  const [errorText, setErrorText] = useState()
+  const {fetchUserLoaded} = props
   React.useEffect(() => {
     fetchUserRequest()
-  }, [])
+  }, [fetchUserRequest])
   async function signIn(){
-    fetchLoaderOn()
     try{
-    let user = await props.journalService.signIn(login, password)
-    await fetchUserLoaded({"username": user.username, "roles": user.roles})
-    fetchLoaderOff()
-    history.push("/main")
+      let user = await props.journalService.signIn(login, password)
+      await fetchUserLoaded({"username": user.username, "roles": user.roles})
+      history.push("/main")
     }catch(err){
-      console.log(err)
-      history.push("/")
-      fetchLoaderOff()
+      setErrorText(err)
+      await history.push("/")
+      await setIsError(true)
     }
   }
   return (
@@ -72,7 +72,7 @@ function SignIn(props:any) {
       <div className={classes.paper}>
         <img className='logo' src={Logo} alt="logo"></img>
         <h3 style={{textAlign: 'center'}}>Welcome to the Students System Management</h3>
-        <h3 style={{marginBottom: '0px'}}>Please Log in with your email or username</h3>
+        <h3 style={{marginBottom: '0px'}} onClick={()=>console.log(JSON.stringify(errorText))}>Please Log in with your email or username</h3>
         <TextField
           id="outlined-basic"
           label="Email/Username"
@@ -94,6 +94,9 @@ function SignIn(props:any) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {
+          isError ? <h3>Bad username or password</h3> : null
+        }
             <Button
               type="submit"
               variant="contained"

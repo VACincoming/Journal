@@ -19,6 +19,8 @@ export default class JournalService{
       localStorage.setItem("Token", res.data.data.token)
       this.header.Authorization = res.data.data.token
       return res.data.data
+    }).catch((err:any) => {
+        throw new Error(err.response)
     })
   }
   signUp(data:any){
@@ -35,7 +37,7 @@ export default class JournalService{
       method: 'get',
       url: `${url}schedule?weekType=${weekType}`,
       headers: this.header
-    }).catch((err) => console.log(err))
+    }).catch((err) => {return err})
   }
   getScheduleTime(){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
@@ -43,7 +45,7 @@ export default class JournalService{
       method: 'get',
       url: `${url}schedule/time`,
       headers: this.header
-    }).catch((err) => console.log(err))
+    }).catch((err) => {return err})
   }
   getUser(){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
@@ -64,6 +66,6 @@ export default class JournalService{
       url: `${url}users`,
       headers: this.header
     }).then((users:any) => {return users.data.data})
-      .catch((err) => console.log(err))
+      .catch((err) => {return err})
   }
 }

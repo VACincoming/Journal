@@ -73,7 +73,7 @@ function Schedule(props:any){
     {"id": 5, "data": "12:00 - 13:20"}
   ]
   const {fetchSchedule, fetchScheduleTime} = props
-  const changeWeek = () => {
+  const changeWeek = ():void => {
     if(weekType === 'ODD') setWeekType('EVEN')
     else setWeekType('ODD')
   }

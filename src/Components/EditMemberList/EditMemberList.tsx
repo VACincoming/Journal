@@ -12,20 +12,25 @@ function EditMemberList(props:any){
   let listItem = null;
   const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
+  const [selectedMembers, setSelectedMembers] = useState('');
   const {fetchGetAllUsers, users} = props
+  const [selectedUsers, setSelectedUsers] = useState(users)
+  let usersVariable = [];
   const member = [
-    t("Monitors"),t("Students")
+    {"title": t("Monitors"), "name": "Monitors"},
+    {"title": t("Students"), "name": "Students"}
   ]
-  const handleOpenEditMemberModal = () => {
+  const handleOpenEditMemberModal = (selectedMembers:string):void => {
+    setSelectedMembers(selectedMembers)
     setOpenEditMemberModal(true)
   }
-  const handleCloseEditMemberModal = () => {
+  const handleCloseEditMemberModal = ():void => {
     setOpenEditMemberModal(false)
   }
   listItem = (
      member.map((el:any) => {
       return(
-        <EditMemberListItem key={el} member={el} handleOpenEditMemberModal={handleOpenEditMemberModal}/>
+        <EditMemberListItem key={el.name} member={el.title} name={el.name} handleOpenEditMemberModal={handleOpenEditMemberModal}/>
       )
     }))
     useEffect(() => {
@@ -34,7 +39,7 @@ function EditMemberList(props:any){
   return(
     <Fragment>
       {listItem}
-      <EditMemberModal open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={users}/>
+      <EditMemberModal open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers}/>
     </Fragment>
   )
 }

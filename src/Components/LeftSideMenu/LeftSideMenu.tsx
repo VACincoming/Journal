@@ -54,7 +54,7 @@ function LeftSideMenu(props:any) {
             </Link>
             <Divider />
           </div>
-          { props.user && props.user.roles && props.user.roles.filter((el:any) => el === 'ADMIN') &&
+          { props.user && props.user.role && props.user.role === "ADMIN" &&
             <div>
               <Link to='/adminTools'>
                 <ListItem button className='listItem'>

@@ -16,9 +16,9 @@ function GroupListTable(props:any){
         {
           users && users.map((el:any) => {
             if(el.roles.filter((el:any) => el === 'STUDENT').length > 0){
-            return(
-              <p key={el.id}>{el.firstName}</p>
-            )
+              return(
+                <p key={el.id}>{el.firstName}</p>
+              )
             }
           })
         }

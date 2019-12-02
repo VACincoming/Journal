@@ -4,9 +4,9 @@ import {connect} from 'react-redux'
 const ProtectedRoute = (data:any) => {
   const { Component, props, user, ...rest} = data
   function checkAuth(location:any){
-    let roles = user ? user.roles : null
-    if(roles && roles.includes("ADMIN") && location.pathname === "/adminTools") return true
-    else if(roles && !(roles.includes("ADMIN") || roles.includes("MONITOR") || roles.includes("STUDENT")))return false
+    let role = user ? user.role : null
+    if(role && role === 'ADMIN' && location.pathname === "/adminTools") return true
+    else if(role && !(role === "ADMIN" || role === "MONITOR" || role === "STUDENT")) return false
     else if (location.pathname !== "/adminTools") return true
   }
   return(
