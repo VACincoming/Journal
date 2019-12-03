@@ -28,6 +28,7 @@ function Header(props:any){
   let history = useHistory();
   function logOut(){
     fetchUserRequest()
+    localStorage.removeItem("Token")
     history.push("/")
   }
   React.useEffect(() => {

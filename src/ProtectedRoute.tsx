@@ -6,6 +6,7 @@ const ProtectedRoute = (data:any) => {
   function checkAuth(location:any){
     let role = user ? user.role : null
     if(role && role === 'ADMIN' && location.pathname === "/adminTools") return true
+    else if(role === null && (location.pathname === '/main' || location.pathname === '/grouplist' || location.pathname === '/schedule' || location.pathname === '/adminTools')) return false
     else if(role && !(role === "ADMIN" || role === "MONITOR" || role === "STUDENT")) return false
     else if (location.pathname !== "/adminTools") return true
   }

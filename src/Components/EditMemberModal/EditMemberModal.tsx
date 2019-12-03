@@ -7,31 +7,37 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 function EditMemberModal(props:any){
-  const {onClose, open, users} = props
+  const {onClose, open, users, handleChangeRole} = props
   const handleClose = () => {
     onClose()
     setSearchText('');
   } 
+  console.log(users)
   const [filterArray, setFilterArray] = useState(users)
   const [searchText, setSearchText] = useState('')
   let elements = null
-  const search = useCallback((filterText:any) => {
-    setFilterArray(users.filter((item:any) => {
-      return ((item.firstName.toLowerCase() + '' + item.lastName.toLowerCase()).indexOf(filterText.toLowerCase()) > -1)
-    }))
-  }, [users])
+  const search = 
+    useCallback((filterText:any) => {
+      setFilterArray(users.filter((item:any) => {
+        return ((item.firstName.toLowerCase() + '' + item.lastName.toLowerCase()).indexOf(filterText.toLowerCase()) > -1)
+      }))
+    }, [users])
   function onSearch(text:any){
+    console.log(text, filterArray, users, searchText)
     setSearchText(text);
     search(text);
   }
   useEffect(() => {
     setFilterArray(users);
-  }, [users])
+  }, [])
   useEffect(() => {
     search(searchText)
   }, [search, searchText])
+  const changeRole = (id:number, role:string, email:string, username:string) => {
+    handleChangeRole(id, role, email, username).then(()=>onSearch(searchText))
+  }
   elements = (
-    users.length > 0 ?
+    users && users.length > 0 ?
     <>
     <TextField
       id="margin-none"
@@ -48,7 +54,7 @@ function EditMemberModal(props:any){
           return(
             <div className='listItemWrapper' key={el.id}>
               <h4>{el.firstName} {el.lastName}</h4>
-              <Button variant="contained" className="blueBtn">Change role</Button>
+              <Button variant="contained" className="blueBtn" onClick={()=>changeRole(el.id, el.role, el.email, el.username)}>Change role</Button>
             </div>
           )
         }

@@ -17,6 +17,8 @@
     "i18next-xhr-backend": "^2.0.1",
     "material-ui": "^0.20.2",
     "react": "^16.11.0",
+    "react-bootstrap-button-loader": "^2.0.0",
+    "react-button-loaders": "0.0.1",
     "react-dom": "^16.11.0",
     "react-i18next": "^10.1.2",
     "react-redux": "^7.1.3",

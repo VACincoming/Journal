@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
+import { Rabbit as Button } from 'react-button-loaders'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -50,20 +51,24 @@ function SignIn(props:any) {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
-  const [errorText, setErrorText] = useState()
+  const [errorText, setErrorText] = useState(null)
+  const [isLoading, setIsLoading] = useState('')
   const {fetchUserLoaded} = props
   React.useEffect(() => {
     fetchUserRequest()
   }, [fetchUserRequest])
   async function signIn(){
+    setIsLoading("loading")
     try{
       let user = await props.journalService.signIn(login, password)
-      await fetchUserLoaded({"username": user.username, "roles": user.roles})
+      await fetchUserLoaded({"username": user.username, "role": user.role})
+      setIsLoading('')
       history.push("/main")
     }catch(err){
-      setErrorText(err)
-      await history.push("/")
-      await setIsError(true)
+      setIsLoading('')
+      history.push("/")
+      setErrorText(err.message.toString())
+      setIsError(true)
     }
   }
   return (
@@ -72,7 +77,7 @@ function SignIn(props:any) {
       <div className={classes.paper}>
         <img className='logo' src={Logo} alt="logo"></img>
         <h3 style={{textAlign: 'center'}}>Welcome to the Students System Management</h3>
-        <h3 style={{marginBottom: '0px'}} onClick={()=>console.log(JSON.stringify(errorText))}>Please Log in with your email or username</h3>
+        <h3 style={{marginBottom: '0px'}}>Please Log in with your email or username</h3>
         <TextField
           id="outlined-basic"
           label="Email/Username"
@@ -95,9 +100,9 @@ function SignIn(props:any) {
           onChange={(e) => setPassword(e.target.value)}
         />
         {
-          isError ? <h3>Bad username or password</h3> : null
+          isError ? <h3 style={{"color": "#c70000f2"}}>{errorText}</h3> : null
         }
-            <Button
+           {/*  <Button
               type="submit"
               variant="contained"
               color="primary"
@@ -105,6 +110,10 @@ function SignIn(props:any) {
               style={{marginTop:'20px', minWidth: '200px'}}
               onClick={signIn}
               disabled={props.loading}
+            > */}
+            <Button
+            onClick={signIn}
+            state={isLoading}
             >
             SIGN IN
             </Button>

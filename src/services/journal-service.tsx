@@ -6,21 +6,19 @@ export default class JournalService{
     "Authorization": ''
   }
 
-  signIn(username:string,password:string){
-    const data = {
-      "username": `${username}`,
-      "password": `${password}`
-    }
+  signIn(username:string, password:string){
+    const data = {username, password}
     return axios({
       method: 'post',
       url: `${url}login`,
       data: data
-    }).then((res) => {
-      localStorage.setItem("Token", res.data.data.token)
-      this.header.Authorization = res.data.data.token
-      return res.data.data
+    }).then((res:any) => {
+      const data = res.data.data;
+      localStorage.setItem("Token", data.token)
+      this.header.Authorization = data.token
+      return data
     }).catch((err:any) => {
-        throw new Error(err.response)
+        throw new Error(err.response.data.message)
     })
   }
   signUp(data:any){
@@ -60,12 +58,23 @@ export default class JournalService{
     })
   }
   getAllUsers(){
-    console.log(this.header)
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
       method: 'get',
       url: `${url}users`,
       headers: this.header
     }).then((users:any) => {return users.data.data})
       .catch((err) => {return err})
+  }
+  changeRole(id:number, role:string, email:string, username:string){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    if(role === 'STUDENT') role="MONITOR"
+    else if(role === 'MONITOR') role="STUDENT"
+    return axios({
+      method: 'post',
+      url: `${url}users/${id}`,
+      headers: this.header,
+      data: {email, role, username},
+    })
   }
 }

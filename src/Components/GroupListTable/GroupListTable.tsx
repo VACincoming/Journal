@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Button'
 
 function GroupListTable(props:any){
   const {weekType, changeWeek, users, schedule} = props
+  console.log(props)
   return (
     <>
       <div>
@@ -15,9 +16,9 @@ function GroupListTable(props:any){
         <>
         {
           users && users.map((el:any) => {
-            if(el.roles.filter((el:any) => el === 'STUDENT').length > 0){
+            if(el.role === 'STUDENT'){
               return(
-                <p key={el.id}>{el.firstName}</p>
+                <p key={el.id}>{el.firstName} {el.lastName}</p>
               )
             }
           })

@@ -13,24 +13,36 @@ function EditMemberList(props:any){
   const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState('');
-  const {fetchGetAllUsers, users} = props
-  const [selectedUsers, setSelectedUsers] = useState(users)
-  let usersVariable = [];
+  const {fetchGetAllUsers, users, journalService} = props
+  const [selectedUsers, setSelectedUsers] = useState([])
+  let usersVariable:any = [];
   const member = [
     {"title": t("Monitors"), "name": "Monitors"},
     {"title": t("Students"), "name": "Students"}
   ]
-  const handleOpenEditMemberModal = (selectedMembers:string):void => {
-    setSelectedMembers(selectedMembers)
+  const handleOpenEditMemberModal = (title:string):void => {
+    setSelectedMembers(title)
+
+    if(title === 'Students'){
+      usersVariable = users.filter((el:any) => el.role === 'STUDENT')
+      setSelectedUsers(usersVariable)
+    }else if(title === 'Monitors'){
+      usersVariable = users.filter((el:any) => el.role ==='MONITOR')
+      setSelectedUsers(usersVariable)
+    }
     setOpenEditMemberModal(true)
   }
   const handleCloseEditMemberModal = ():void => {
     setOpenEditMemberModal(false)
   }
+  const handleChangeRole = (id:number, role: string, email:string, username:string) => {
+    return(
+      journalService.changeRole(id, role, email, username).then(() => fetchGetAllUsers())).then(()=> console.log(users))
+    }
   listItem = (
      member.map((el:any) => {
       return(
-        <EditMemberListItem key={el.name} member={el.title} name={el.name} handleOpenEditMemberModal={handleOpenEditMemberModal}/>
+        <EditMemberListItem key={el.name} member={el.title} name={el.name} handleOpenEditMemberModal={handleOpenEditMemberModal} />
       )
     }))
     useEffect(() => {
@@ -39,7 +51,7 @@ function EditMemberList(props:any){
   return(
     <Fragment>
       {listItem}
-      <EditMemberModal open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers}/>
+      <EditMemberModal open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers} handleChangeRole={(id:number, role:string, email:string, username:string) => handleChangeRole(id, role,email, username)}/>
     </Fragment>
   )
 }
