@@ -8,16 +8,18 @@ function ScheduleTable(props:any){
           {day}
           <table>
             <tbody>
-              {
-                pairs.map((el:any, index:number) => {
-                  return(
-                    <tr key={el.order}>
-                      <td>{el.order}</td>
-                      <td>{el.name}</td>
+              <tr key={pairs.dayOfWeek}>
+                <th>{pairs.dayOfWeek}</th>
+              </tr>
+                {
+                  pairs .subjects.map((el:any) => {
+                    return(
+                    <tr key={el.index}>
+                      <td>{el.subject}</td>
                     </tr>
-                  )
-                })
-              }
+                    )
+                  })
+                }
             </tbody>
           </table>
       </Grid>

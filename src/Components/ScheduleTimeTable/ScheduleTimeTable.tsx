@@ -13,8 +13,7 @@ export default function ScheduleTimeTable(props:any){
             scheduleTime && scheduleTime.map((el:any) => {
               return(
                 <tr key={el.id}>
-                  <td>{el.id}</td>
-                  <td>{el.data}</td>
+                  <td>{el.beginning} - {el.end}</td>
                 </tr>
               )
             })

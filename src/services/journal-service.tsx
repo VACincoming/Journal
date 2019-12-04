@@ -33,9 +33,10 @@ export default class JournalService{
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
       method: 'get',
-      url: `${url}schedule?weekType=${weekType}`,
+      url: `${url}schedule?week_type=${weekType}`,
       headers: this.header
-    }).catch((err) => {return err})
+    }).then((res:any) => res)
+    .catch((err) => {return err})
   }
   getScheduleTime(){
     this.header.Authorization = localStorage.getItem("Token")!.toString();

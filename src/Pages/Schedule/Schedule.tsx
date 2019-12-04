@@ -10,76 +10,29 @@ import {connect} from 'react-redux'
 import {fetchSchedule, fetchScheduleTime} from '../../actions'
 import { bindActionCreators } from 'redux'
 import ScheduleTimeTable from '../../Components/ScheduleTimeTable'
+import Spinner from '../../Components/Spinner'
 function Schedule(props:any){
   const { t } = useTranslation()
   const [weekType, setWeekType] = useState('ODD')
-  const data = [
-    {
-      "day": "Monday",
-      "pairs": [
-        {"name":null, "order": 1},
-        {"name":'TPP miheeeeed alexandr vladimirovich 1-311', "order": 2},
-        {"name":'History', "order": 3},
-        {"name":'Chemistry', "order": 4},
-        {"name":null, "order": 5}
-      ],
-    },
-    {
-      "day": "Tuesday",
-      "pairs":[
-        {"name": null, "order": 1},
-        {"name": 'TPP', "order": 2},
-        {"name": null, "order": 3},
-        {"name": 'Chemistry', "order": 4 },
-        {"name": null, "order": 5}
-      ]
-    },
-    {
-      "day": "Wednesday",
-      "pairs":[
-        {"name":null, "order": 1},
-        {"name":'TPP', "order": 2},
-        {"name":'History', "order": 3},
-        {"name":'Chemistry', "order": 4},
-        {"name":null, "order": 5}
-      ]
-    },
-    {
-      "day": "Thursday",
-      "pairs":[
-        {"name": null, "order": 1},
-        {"name": 'TPP', "order": 2},
-        {"name": null, "order": 3},
-        {"name": 'Chemistry', "order": 4 },
-        {"name": null, "order": 5}
-      ],
-    },
-    {
-      "day": "Friday",
-      "pairs":[
-        {"name":null, "order": 1},
-        {"name":'TPP', "order": 2},
-        {"name":'History', "order": 3},
-        {"name":'Chemistry', "order": 4},
-        {"name":null, "order": 5}
-      ]
+  const [loading, setLoading] = useState(false)
+  const {fetchSchedule,  fetchScheduleTime, schedule, scheduleTime} = props
+  async function changeWeek(){
+    setLoading(true)
+    if(weekType === 'ODD') {
+      setWeekType('EVEN')
+      await fetchSchedule(weekType)
+      setLoading(false)
+      return
     }
-  ]
-  const scheduleTime = [
-    {"id": 1, "data": "08:00 - 09:20"},
-    {"id": 2, "data": "09:00 - 10:20"},
-    {"id": 3, "data": "10:00 - 11:20"},
-    {"id": 4, "data": "11:00 - 12:20"},
-    {"id": 5, "data": "12:00 - 13:20"}
-  ]
-  const {fetchSchedule, fetchScheduleTime} = props
-  const changeWeek = ():void => {
-    if(weekType === 'ODD') setWeekType('EVEN')
-    else setWeekType('ODD')
+    else {
+      setWeekType('ODD')
+      await fetchSchedule(weekType)
+      setLoading(false)
+    }
   }
   useEffect(() => {
     fetchSchedule(weekType)
-  },[fetchSchedule, weekType])
+  },[fetchSchedule])
   useEffect(() => {
     fetchScheduleTime()
   }, [fetchScheduleTime])
@@ -87,6 +40,8 @@ function Schedule(props:any){
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
+      { loading ? <Spinner/> :
+      <>
       <Grid container justify='center' direction='row' alignItems='center' className='buttonContainer'>
         <Grid >
           <Button 
@@ -104,14 +59,16 @@ function Schedule(props:any){
       </Grid>
       <Grid container justify='center' direction='row' alignItems='center' className='tableContainer'>
         {
-          data && data.map((el:any) => {
+          schedule && schedule.map((el:any) => {
             return(
-              <ScheduleTable key={el.day} day={el.day} pairs={el.pairs}/>
+              <ScheduleTable key={el.dayOfWeek} pairs={el}/>
             )
           })
         }
         <ScheduleTimeTable scheduleTime={scheduleTime}/>
       </Grid>
+        </>
+          }
     </div>
   )
 }
