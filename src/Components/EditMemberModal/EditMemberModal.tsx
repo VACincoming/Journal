@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 function EditMemberModal(props:any){
-  const {onClose, open, users, handleChangeRole} = props
+  const {onClose, open, users, handleChangeRole, loading} = props
   const handleClose = () => {
     onClose()
     setSearchText('');
@@ -23,7 +23,6 @@ function EditMemberModal(props:any){
       }))
     }, [users])
   function onSearch(text:any){
-    console.log(text, filterArray, users, searchText)
     setSearchText(text);
     search(text);
   }
@@ -33,8 +32,9 @@ function EditMemberModal(props:any){
   useEffect(() => {
     search(searchText)
   }, [search, searchText])
-  const changeRole = (id:number, role:string, email:string, username:string) => {
-    handleChangeRole(id, role, email, username).then(()=>onSearch(searchText))
+  async function changeRole(id:number, role:string, email:string, username:string){
+    await handleChangeRole(id, role, email, username)
+    onSearch(searchText)
   }
   elements = (
     users && users.length > 0 ?
@@ -62,9 +62,12 @@ function EditMemberModal(props:any){
   }</> : <h3>no users</h3>)
   return(
     <Dialog onClose={handleClose} open={open} className='DialogWidth'>
+      {
+      loading ? <p>Loading...</p> : 
       <div className='wrapperEditMember'>
           {elements}
       </div>
+      } 
     </Dialog>
   )
 }

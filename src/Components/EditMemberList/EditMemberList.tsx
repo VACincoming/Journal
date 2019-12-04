@@ -5,7 +5,7 @@ import './editMemberList.css'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import { withJournalService } from '../../hoc';
-import { fetchGetAllUsers } from '../../actions'
+import { fetchGetAllUsers, fetchLoaderOn,fetchLoaderOff } from '../../actions'
 import { useTranslation } from 'react-i18next'
 
 function EditMemberList(props:any){
@@ -13,7 +13,8 @@ function EditMemberList(props:any){
   const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState('');
-  const {fetchGetAllUsers, users, journalService} = props
+  const {fetchGetAllUsers, users, journalService, fetchLoaderOn,fetchLoaderOff, loading} = props
+
   const [selectedUsers, setSelectedUsers] = useState([])
   let usersVariable:any = [];
   const member = [
@@ -35,9 +36,11 @@ function EditMemberList(props:any){
   const handleCloseEditMemberModal = ():void => {
     setOpenEditMemberModal(false)
   }
-  const handleChangeRole = (id:number, role: string, email:string, username:string) => {
-    return(
-      journalService.changeRole(id, role, email, username).then(() => fetchGetAllUsers())).then(()=> console.log(users))
+  async function handleChangeRole(id:number, role: string, email:string, username:string){
+      fetchLoaderOn()
+      await journalService.changeRole(id, role, email, username)
+      await fetchGetAllUsers()
+      fetchLoaderOff()
     }
   listItem = (
      member.map((el:any) => {
@@ -51,20 +54,23 @@ function EditMemberList(props:any){
   return(
     <Fragment>
       {listItem}
-      <EditMemberModal open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers} handleChangeRole={(id:number, role:string, email:string, username:string) => handleChangeRole(id, role,email, username)}/>
+      <EditMemberModal loading={loading} open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers} handleChangeRole={(id:number, role:string, email:string, username:string) => handleChangeRole(id, role,email, username)}/>
     </Fragment>
   )
 }
 
 const mapStateToProps = (state:any) => {
   return {
-    users: state.users
+    users: state.users,
+    loading: state.loading
   }
 }
 
 const mapDispatchToProps = (dispatch:any, ownProps:any) => {
   const {journalService} = ownProps;
   return bindActionCreators({
+    fetchLoaderOn: fetchLoaderOn(),
+    fetchLoaderOff: fetchLoaderOff(),
     fetchGetAllUsers: fetchGetAllUsers(journalService)
   }, dispatch)
 }
