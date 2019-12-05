@@ -7,13 +7,23 @@ import {connect} from 'react-redux'
 import { withJournalService } from '../../hoc';
 import { fetchGetAllUsers, fetchLoaderOn,fetchLoaderOff } from '../../actions'
 import { useTranslation } from 'react-i18next'
+import {IUsers} from '../../interfaces/Interfaces'
 
-function EditMemberList(props:any){
+type EditMemberListProps = {
+  users: IUsers[],
+  loading: boolean,
+  fetchGetAllUsers: any,
+  journalService: any,
+  fetchLoaderOn: any,
+  fetchLoaderOff: any,
+}
+
+const EditMemberList: React.FC<EditMemberListProps> = ({
+  fetchGetAllUsers, users, journalService, fetchLoaderOn,fetchLoaderOff, loading}) => {
   let listItem = null;
   const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState('');
-  const {fetchGetAllUsers, users, journalService, fetchLoaderOn,fetchLoaderOff, loading} = props
 
   const [selectedUsers, setSelectedUsers] = useState([])
   let usersVariable:any = [];

@@ -1,4 +1,12 @@
-const initialState = {
+interface IInitialState{
+  user: []
+  users: []
+  loading: boolean
+  error: any
+  schedule: []
+  scheduleTime: []
+}
+const initialState:IInitialState = {
   user: [],
   users: [],
   loading: true,

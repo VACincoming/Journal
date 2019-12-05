@@ -8,13 +8,14 @@ function ScheduleTable(props:any){
           {day}
           <table>
             <tbody>
-              <tr key={pairs.dayOfWeek}>
-                <th>{pairs.dayOfWeek}</th>
+              <tr>
+                <th colSpan={2}>{pairs.dayOfWeek}</th>
               </tr>
                 {
-                  pairs .subjects.map((el:any) => {
+                  pairs.subjects.map((el:any) => {
                     return(
                     <tr key={el.index}>
+                      <td>{el.index}</td>
                       <td>{el.subject}</td>
                     </tr>
                     )

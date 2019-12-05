@@ -14,25 +14,25 @@ import Spinner from '../../Components/Spinner'
 function Schedule(props:any){
   const { t } = useTranslation()
   const [weekType, setWeekType] = useState('ODD')
-  const [loading, setLoading] = useState(false)
+  //const [loading, setLoading] = useState(false)
   const {fetchSchedule,  fetchScheduleTime, schedule, scheduleTime} = props
   async function changeWeek(){
-    setLoading(true)
+    //setLoading(true)
     if(weekType === 'ODD') {
       setWeekType('EVEN')
-      await fetchSchedule(weekType)
-      setLoading(false)
+      await fetchSchedule('EVEN')
+      //setLoading(false)
       return
     }
-    else {
-      setWeekType('ODD')
-      await fetchSchedule(weekType)
-      setLoading(false)
+    if(weekType === 'EVEN') {
+      await setWeekType('ODD')
+      await fetchSchedule('ODD')
+      //setLoading(false)
     }
   }
   useEffect(() => {
     fetchSchedule(weekType)
-  },[fetchSchedule])
+  },[])
   useEffect(() => {
     fetchScheduleTime()
   }, [fetchScheduleTime])
@@ -40,8 +40,6 @@ function Schedule(props:any){
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
-      { loading ? <Spinner/> :
-      <>
       <Grid container justify='center' direction='row' alignItems='center' className='buttonContainer'>
         <Grid >
           <Button 
@@ -52,6 +50,7 @@ function Schedule(props:any){
           </Button>
           <Button 
             className='changeGroupBtn'
+            disabled={true}
             >
             KI-161
           </Button>
@@ -67,8 +66,6 @@ function Schedule(props:any){
         }
         <ScheduleTimeTable scheduleTime={scheduleTime}/>
       </Grid>
-        </>
-          }
     </div>
   )
 }

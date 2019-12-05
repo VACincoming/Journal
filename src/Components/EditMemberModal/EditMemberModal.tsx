@@ -6,23 +6,22 @@ import searchImg from '../../assets/img/searchImg.png'
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-function EditMemberModal(props:any){
+const EditMemberModal: React.FC<any> = props => {
   const {onClose, open, users, handleChangeRole, loading} = props
   const handleClose = () => {
     onClose()
     setSearchText('');
   } 
-  console.log(users)
   const [filterArray, setFilterArray] = useState(users)
   const [searchText, setSearchText] = useState('')
   let elements = null
   const search = 
-    useCallback((filterText:any) => {
+    useCallback((filterText:string) => {
       setFilterArray(users.filter((item:any) => {
         return ((item.firstName.toLowerCase() + '' + item.lastName.toLowerCase()).indexOf(filterText.toLowerCase()) > -1)
       }))
     }, [users])
-  function onSearch(text:any){
+  function onSearch(text:string){
     setSearchText(text);
     search(text);
   }
@@ -49,16 +48,15 @@ function EditMemberModal(props:any){
         endAdornment: <InputAdornment position="end"><img src={searchImg} alt="Search"/></InputAdornment>,
       }}
     />{
-      filterArray.map((el:any) => {
-        if(el.id !== null){
+      filterArray.filter((user:any) => user.id !== null)
+        .map((user:any) => {
           return(
-            <div className='listItemWrapper' key={el.id}>
-              <h4>{el.firstName} {el.lastName}</h4>
-              <Button variant="contained" className="blueBtn" onClick={()=>changeRole(el.id, el.role, el.email, el.username)}>Change role</Button>
+            <div className='listItemWrapper' key={user.id}>
+              <h4>{user.firstName} {user.lastName}</h4>
+              <Button variant="contained" className="blueBtn" onClick={()=>changeRole(user.id, user.role, user.email, user.username)}>Change role</Button>
             </div>
           )
-        }
-    })
+        })
   }</> : <h3>no users</h3>)
   return(
     <Dialog onClose={handleClose} open={open} className='DialogWidth'>

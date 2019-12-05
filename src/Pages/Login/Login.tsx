@@ -53,14 +53,14 @@ function SignIn(props:any) {
   const [isError, setIsError] = useState(false)
   const [errorText, setErrorText] = useState(null)
   const [isLoading, setIsLoading] = useState('')
-  const {fetchUserLoaded} = props
+  const {fetchUserLoaded, journalService} = props
   React.useEffect(() => {
     fetchUserRequest()
-  }, [fetchUserRequest])
+  }, [])
   async function signIn(){
     setIsLoading("loading")
     try{
-      let user = await props.journalService.signIn(login, password)
+      let user = await journalService.signIn(login, password)
       await fetchUserLoaded({"username": user.username, "role": user.role})
       setIsLoading('')
       history.push("/main")
@@ -69,6 +69,11 @@ function SignIn(props:any) {
       history.push("/")
       setErrorText(err.message.toString())
       setIsError(true)
+    }
+  }
+  function signInEnter(event: React.KeyboardEvent){
+    if(event.key === 'Enter'){
+      signIn()
     }
   }
   return (
@@ -97,6 +102,7 @@ function SignIn(props:any) {
           autoComplete="current-password"
           margin="normal"
           value={password}
+          onKeyPress={signInEnter}
           onChange={(e) => setPassword(e.target.value)}
         />
         {

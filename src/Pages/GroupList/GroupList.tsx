@@ -10,7 +10,7 @@ import {connect} from 'react-redux'
 
 function GroupList(props:any){
   const { t } = useTranslation()
-  const {fetchGetAllUsers, fetchSchedule, users, schedule} = props
+  const {fetchGetAllUsers, fetchSchedule, users, schedule, journalService} = props
   const [weekType, setWeekType] = useState('ODD')
   const changeWeek = ():void => {
     if(weekType === 'ODD'){
@@ -21,16 +21,24 @@ function GroupList(props:any){
       fetchSchedule(weekType)
     }
   }
+  const getRegistry = () => {
+    journalService.getRegistry()
+  }
   useEffect(() => {
     fetchGetAllUsers()
   }, [fetchGetAllUsers])
   useEffect(() => {
     fetchSchedule(weekType)
-  }, [weekType, fetchSchedule])
+  }, [])
   return(
     <>
       <Header title={t('GroupList')}/>
-      <GroupListTable users={users} weekType={weekType} changeWeek={changeWeek} schedule={schedule}/>
+      <GroupListTable 
+        users={users}
+        weekType={weekType}
+        changeWeek={changeWeek}
+        schedule={schedule}
+        getRegistry={getRegistry}/>
     </>
   )
 }

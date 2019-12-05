@@ -2,7 +2,7 @@ import React from 'react'
 import "./scheduleTimeTable.css"
 import Grid from '@material-ui/core/Grid'
 
-export default function ScheduleTimeTable(props:any){
+const ScheduleTimeTable: React.FC<any> = (props) =>{
   const {scheduleTime} = props
   return(
     <Grid item xl={2} lg={2} md={3} sm={4} xs={6} className='scheduleTableWrapper'>
@@ -23,4 +23,6 @@ export default function ScheduleTimeTable(props:any){
     </Grid>
   )
 }
+
+export default ScheduleTimeTable
 
