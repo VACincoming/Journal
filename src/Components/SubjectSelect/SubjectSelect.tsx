@@ -13,19 +13,22 @@ const useStyles = makeStyles((theme:any) => ({
   },
 }));
 
-const SubjectSelect: React.FC = () => {
+const SubjectSelect: React.FC<any> = (props) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
+    subject: 'Subject',
   });
+  let id = null;
+  const {subjects, changeSubjectId} = props
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const handleChange = (name:any) => (event:any) => {
+    id = subjects.filter((subject:any) => subject.name === event.target.value)[0].id
     setState({
       ...state,
       [name]: event.target.value,
     });
+    changeSubjectId(id)
   };
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth!);
@@ -33,22 +36,26 @@ const SubjectSelect: React.FC = () => {
   return(
     <FormControl variant="outlined" className={classes.formControl}>
     <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
-      Age
+      Subject
     </InputLabel>
     <Select
       native
-      value={state.age}
-      onChange={handleChange('age')}
+      value={state.subject}
+      onChange={handleChange('subject')}
       labelWidth={labelWidth}
       inputProps={{
-        name: 'age',
+        subejct: 'subject',
         id: 'outlined-age-native-simple',
       }}
     >
       <option value="" />
-      <option value={10}>Ten</option>
-      <option value={20}>Twenty</option>
-      <option value={30}>Thirty</option>
+      {
+        subjects && subjects.map((subject:any) => {
+          return(
+            <option key={subject.id} value={subject.name}>{subject.name}</option>
+          )
+        })
+      }
     </Select>
   </FormControl>
   )

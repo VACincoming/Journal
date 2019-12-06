@@ -12,15 +12,3 @@
   align-items: center;
   margin-top: 20px !important;
 }
-table{
-  border-collapse: collapse;
-  border-spacing: 0px;
-  margin-top: 10px;
-  min-width:90%;
-  max-width: 230px;
-  text-align: center;
-}
-table, th, td{
-  padding: 5px;
-  border: 1px solid #fff;
-}

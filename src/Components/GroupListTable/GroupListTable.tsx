@@ -6,13 +6,12 @@ import SubjectSelect from '../SubjectSelect'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 const GroupListTable: React.FC<any> = (props) =>{
-  const {users, getRegistry} = props
+  const {users, getRegistry, getSubjects, subjects} = props
   return (
     <>
       <Grid container justify='center' alignItems='center' direction='column'>
-        <Grid container item xl={4} lg={4} md={8} sm={12} xs={12} justify='space-around' alignItems='center' className='groupToolWrapper'>
+        <Grid container item xl={6} lg={6} md={10} sm={12} xs={12} justify='space-around' alignItems='center' className='groupToolWrapper'>
           <Calendar />
-          <SubjectSelect />
           <Button variant="contained" color="primary" className='ApplyBtn' onClick={getRegistry}>Apply</Button>
         </Grid>
           <Grid item xs={10} className='tableWrapper'>
@@ -20,6 +19,7 @@ const GroupListTable: React.FC<any> = (props) =>{
               <tbody>
                 <tr>
                   <th>STUDENTS LIST</th>
+                  <th>Present</th>
                   <th>Apsent</th>
                 </tr>
               {
@@ -28,6 +28,7 @@ const GroupListTable: React.FC<any> = (props) =>{
                   return(
                     <tr key={user.id}>
                         <td>{user.firstName} {user.lastName}</td>
+                        <td>+</td>
                         <td><input type='checkbox'/></td>
                       </tr>
                     )
@@ -36,7 +37,6 @@ const GroupListTable: React.FC<any> = (props) =>{
               </tbody>
           </table>
         </Grid>
-        <Button variant="contained" color="primary" className='sentBtn'>Sent</Button>
       </Grid>
     </>
   )

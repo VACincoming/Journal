@@ -4,13 +4,14 @@ import Header from '../../Components/Header'
 import { useTranslation } from 'react-i18next'
 import GroupListTable from '../../Components/GroupListTable'
 import { withJournalService } from '../../hoc';
-import {fetchGetAllUsers, fetchLoaderOn, fetchLoaderOff, fetchSchedule} from '../../actions'
+import {fetchGetAllUsers, fetchLoaderOn, fetchLoaderOff, fetchSchedule, fetchRegistry,
+  fetchSubjects} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-
+import RegistryTabs from '../../Components/RegistryTabs'
 function GroupList(props:any){
   const { t } = useTranslation()
-  const {fetchGetAllUsers, fetchSchedule, users, schedule, journalService} = props
+  const {fetchGetAllUsers, fetchSchedule, users, schedule, fetchRegistry, registry} = props
   const [weekType, setWeekType] = useState('ODD')
   const changeWeek = ():void => {
     if(weekType === 'ODD'){
@@ -22,23 +23,35 @@ function GroupList(props:any){
     }
   }
   const getRegistry = () => {
-    journalService.getRegistry()
+    fetchRegistry('2019-12-05')
   }
   useEffect(() => {
     fetchGetAllUsers()
   }, [fetchGetAllUsers])
   useEffect(() => {
-    fetchSchedule(weekType)
+    fetchRegistry('2019-12-05')
   }, [])
   return(
     <>
       <Header title={t('GroupList')}/>
-      <GroupListTable 
+      <RegistryTabs 
         users={users}
         weekType={weekType}
         changeWeek={changeWeek}
         schedule={schedule}
-        getRegistry={getRegistry}/>
+        getRegistry={getRegistry}
+        registry={registry}
+      />
+     {/*  <GroupListTable 
+        users={users}
+        weekType={weekType}
+        changeWeek={changeWeek}
+        schedule={schedule}
+        getRegistry={getRegistry}
+        getSubjects={getSubjects}
+        subjects={subjects}
+        registry={registry}
+        /> */}
     </>
   )
 }
@@ -50,6 +63,7 @@ const mapDispatchToProps = (dispatch:any, ownProps:any) => {
     fetchSchedule: fetchSchedule(journalService),
     fetchLoaderOn: fetchLoaderOn(),
     fetchLoaderOff: fetchLoaderOff(),
+    fetchRegistry: fetchRegistry(journalService),
   }, dispatch)
 }
 
@@ -58,7 +72,8 @@ const mapStateToProps = (state:any) => {
     return {
       loading: state.loading,
       users: state.users,
-      schedule: state.schedule
+      schedule: state.schedule,
+      registry: state.registry
     }
   }else return {state}
 }

@@ -5,6 +5,8 @@ interface IInitialState{
   error: any
   schedule: []
   scheduleTime: []
+  registry: []
+  subjects: []
 }
 const initialState:IInitialState = {
   user: [],
@@ -12,11 +14,25 @@ const initialState:IInitialState = {
   loading: true,
   error: null,
   schedule: [],
-  scheduleTime: []
+  scheduleTime: [],
+  registry: [],
+  subjects: []
 }
 
 const reducer = (state:any = initialState, action:any) => {
   switch(action.type){
+    case 'FETCH_REGISTRY_SUCCESS':
+      return{
+        ...state,
+        registry: action.payload,
+        error: null
+      }
+    case 'FETCH_SUBJECTS_SUCCESS':
+      return{
+        ...state,
+        subjects: action.payload,
+        error: null
+      }
     case 'FETCH_SCHEDULE_TIME_SUCCESS':
       return{
         ...state,
