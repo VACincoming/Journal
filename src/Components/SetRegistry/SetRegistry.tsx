@@ -25,10 +25,26 @@ function SetRegistry(props:any){
     setRegistry(structure)
   }
   const setStructure = (event: any, id: any) => {
-    let a = registry.find((obj:any) => obj.userId === id)
+    let a:any = registry.find((obj:any) => obj.userId === id)
+    console.log(registry, id)
     console.log(a)
-    console.log(event.target.checked, id)
+    console.log(typeof a)
+    //if(typeof a === Array)
+    a!.present = !event.target.checked
+    let oldStructure:any = registry;
+    oldStructure.forEach((el:any, index:number) => {
+      if(el.userId === id) oldStructure.splice(index, 1)
+    })
+    console.log(oldStructure)
+    console.log(registry)
+    setRegistry(oldStructure)
+    console.log(registry)
   }
+  /*
+    1) Checkbox onChange() - find object by id and change isPresent (true | false)
+    2) Find in state object with this id and delete it
+    3) set new Object in new state
+  */
   useEffect(() => {
     (async function fetchData(){
       await fetchGetAllUsers()
