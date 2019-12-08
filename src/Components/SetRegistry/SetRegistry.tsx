@@ -18,17 +18,26 @@ function SetRegistry(props:any){
   const getStructure = () => {
     let structure: any = users && users.filter((user:any) => user.role === 'STUDENT' || user.role === 'MONITOR')
       .map((user:any) => ({
-        present: true, 
-        userId: user.id
-      })
-    )
-    console.log(structure, props)
+          present: true, 
+          userId: user.id
+        }) 
+      )
     setRegistry(structure)
   }
-  useEffect(()=> {
-      fetchGetAllUsers()
-      fetchSubjects()
+  const setStructure = (event: any, id: any) => {
+    let a = registry.find((obj:any) => obj.userId === id)
+    console.log(a)
+    console.log(event.target.checked, id)
+  }
+  useEffect(() => {
+    (async function fetchData(){
+      await fetchGetAllUsers()
+      await fetchSubjects()
+    })();
   }, [])
+  useEffect(() => {
+    getStructure()
+  }, [users])
   return(
     <>
       <Grid container justify='center' alignItems='center' direction='column'>
@@ -46,7 +55,7 @@ function SetRegistry(props:any){
                   return(
                     <tr key={user.id}>
                       <td>{user.firstName} {user.lastName}</td>
-                      <td><input type='checkbox' onChange={getStructure}/></td>
+                      <td><input type='checkbox' onChange={(e) => setStructure(e, user.id)}/></td>
                     </tr>
                     )
                   })
