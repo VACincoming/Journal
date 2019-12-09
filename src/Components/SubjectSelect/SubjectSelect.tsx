@@ -20,15 +20,21 @@ const SubjectSelect: React.FC<any> = (props) => {
     subject: 'Subject',
   });
   let id = null;
-  const {subjects, changeSubjectId} = props
+  const {subjects, changeSubjectId, subjectId} = props
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const handleChange = (name:any) => (event:any) => {
-    id = subjects.filter((subject:any) => subject.name === event.target.value)[0].id
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-    changeSubjectId(id)
+    if(event.target.value === null || event.target.value === undefined){
+      changeSubjectId(null)
+    }else if(event.target.value === ''){
+      changeSubjectId(subjectId)
+    }else{
+      id = subjects.filter((subject:any) => subject.name === event.target.value)[0].id
+      setState({
+        ...state,
+        [name]: event.target.value,
+      });
+      changeSubjectId(id)
+    }
   };
   React.useEffect(() => {
     setLabelWidth(inputLabel.current!.offsetWidth!);

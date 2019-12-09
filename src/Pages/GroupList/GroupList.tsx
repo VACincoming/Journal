@@ -41,6 +41,7 @@ function GroupList(props:any){
         schedule={schedule}
         getRegistry={getRegistry}
         registry={registry}
+        
       />
      {/*  <GroupListTable 
         users={users}

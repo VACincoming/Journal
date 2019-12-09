@@ -86,6 +86,15 @@ export default class JournalService{
       headers: this.header
     }).then((res:any) => res.data.data)
   }
+  setRegistry(data:any){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'post',
+      url: `${url}registry`,
+      headers: this.header,
+      data: data
+    }) 
+  }
   getSubjects(){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({

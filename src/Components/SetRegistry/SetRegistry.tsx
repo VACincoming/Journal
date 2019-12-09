@@ -8,10 +8,11 @@ import { withJournalService } from '../../hoc';
 import {fetchGetAllUsers, fetchSubjects} from '../../actions'
 import {connect} from 'react-redux'
 function SetRegistry(props:any){
-  const {subjects, users, fetchGetAllUsers, fetchSubjects} = props
+  const {subjects, users, fetchGetAllUsers, fetchSubjects, journalService} = props
   const [registry, setRegistry] = useState([])
   const [subjectId, setSubjectId] = useState(null)
-  const [allData, setAllData] = useState({})
+  const [isSubjectSelect, setIsSubjectSelect] = useState(true)
+  const [isSuccess, setIsSuccess] = useState(false)
   const changeSubjectId = (id:any) => {
     setSubjectId(id)
   }
@@ -25,20 +26,28 @@ function SetRegistry(props:any){
     setRegistry(structure)
   }
   const setStructure = (event: any, id: any) => {
-    let a:any = registry.find((obj:any) => obj.userId === id)
-    console.log(registry, id)
-    console.log(a)
-    console.log(typeof a)
-    //if(typeof a === Array)
-    a!.present = !event.target.checked
+    let filterRegistry:any = registry.find((obj:any) => obj.userId === id)
+    filterRegistry!.present = !event.target.checked
     let oldStructure:any = registry;
     oldStructure.forEach((el:any, index:number) => {
       if(el.userId === id) oldStructure.splice(index, 1)
     })
-    console.log(oldStructure)
-    console.log(registry)
+    oldStructure.push(filterRegistry)
     setRegistry(oldStructure)
-    console.log(registry)
+  }
+  const setAllData = async() => {
+    if(subjectId === null){
+      setIsSubjectSelect(false)
+      setIsSuccess(false)
+    }else{
+      setIsSubjectSelect(true)
+      setIsSuccess(true)
+      let allData = {
+        registry,
+        subjectId
+      } 
+      journalService.setRegistry(allData)
+    }
   }
   /*
     1) Checkbox onChange() - find object by id and change isPresent (true | false)
@@ -56,8 +65,8 @@ function SetRegistry(props:any){
   }, [users])
   return(
     <>
-      <Grid container justify='center' alignItems='center' direction='column'>
-        <SubjectSelect subjects={subjects} changeSubjectId={(id:any)=>changeSubjectId(id)}/>
+      <Grid container justify='center' alignItems='center' direction='column' >
+        <SubjectSelect subjects={subjects} changeSubjectId={(id:any)=>changeSubjectId(id)} subjectId={subjectId}/>
         <Grid item xs={10} className='tableWrapper'>
             <table>
               <tbody>
@@ -79,7 +88,9 @@ function SetRegistry(props:any){
               </tbody>
           </table>
         </Grid>
-        <Button variant="contained" color="primary" className='sentBtn' onClick={()=>console.log(registry)}>SEND</Button>
+        <Button variant="contained" color="primary" className='sentBtn' onClick={setAllData}>SEND</Button>
+        { isSubjectSelect  ? null : <h3 style={{"color": "#c70000f2"}}>You need to choose subject</h3>}
+        { isSuccess ? <h3>Success!</h3> : null}
       </Grid>
     </>
   )
