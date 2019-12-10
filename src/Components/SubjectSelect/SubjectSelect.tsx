@@ -20,6 +20,7 @@ const SubjectSelect: React.FC<any> = (props) => {
     subject: 'Subject',
   });
   let id = null;
+  console.log(props)
   const {subjects, changeSubjectId, subjectId} = props
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const handleChange = (name:any) => (event:any) => {

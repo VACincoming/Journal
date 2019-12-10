@@ -3,14 +3,9 @@ import MomentUtils from '@date-io/moment';
 import moment from 'moment'
 import './calendar.css'
 import { KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
-const Calendar: React.FC = () => {
 
-  const [selectedDate, setSelectedDate] = React.useState(moment().format('YYYY-MM-DD'));
-  const handleDateChange = (date:any)=> {
-    let currentDate = moment(date).format('YYYY-MM-DD') 
-    setSelectedDate(currentDate);
-  };
-
+const Calendar: React.FC<any> = (props) => {
+  const {selectedDate, changeDate} = props
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <KeyboardDatePicker
@@ -18,10 +13,10 @@ const Calendar: React.FC = () => {
         variant="inline"
         inputVariant="outlined"
         label="With keyboard"
-        format="MM/DD/YYYY"
+        format="DD/MM/YYYY"
         value={selectedDate}
         InputAdornmentProps={{ position: "start" }}
-        onChange={(date:any) => handleDateChange(date)}
+        onChange={(date:any) => changeDate(date)}
       />
     </MuiPickersUtilsProvider>
   )
