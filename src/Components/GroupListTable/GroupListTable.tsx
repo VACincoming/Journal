@@ -5,8 +5,10 @@ import Calendar from '../Calendar'
 import SubjectSelect from '../SubjectSelect'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import { useTranslation } from 'react-i18next'
 const GroupListTable: React.FC<any> = (props) =>{
-  const {users, getRegistry, getSubjects, subjects} = props
+  const {t} = useTranslation()
+  const {users, getRegistry} = props
   return (
     <>
       <Grid container justify='center' alignItems='center' direction='column'>

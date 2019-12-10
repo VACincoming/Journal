@@ -3,6 +3,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
+import { useTranslation } from 'react-i18next'
 const useStyles = makeStyles((theme:any) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -15,12 +16,12 @@ const useStyles = makeStyles((theme:any) => ({
 
 const SubjectSelect: React.FC<any> = (props) => {
   const classes = useStyles();
+  const { t } = useTranslation()
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [state, setState] = React.useState({
     subject: 'Subject',
   });
   let id = null;
-  console.log(props)
   const {subjects, changeSubjectId, subjectId} = props
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const handleChange = (name:any) => (event:any) => {
@@ -43,7 +44,7 @@ const SubjectSelect: React.FC<any> = (props) => {
   return(
     <FormControl variant="outlined" className={classes.formControl}>
     <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
-      Subject
+      {t('Subject')}
     </InputLabel>
     <Select
       native

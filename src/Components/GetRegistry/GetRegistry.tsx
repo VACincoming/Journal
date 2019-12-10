@@ -9,17 +9,17 @@ import {fetchRegistry} from '../../actions'
 import {connect} from 'react-redux'
 import moment from 'moment'
 import SubjectSelect from '../SubjectSelect'
+import GetRegistryTable from '../GetRegistryTable'
 
 function GetRegistry(props:any){
-  const {journalService, fetchRegistry, registry} = props
+  const {fetchRegistry, registry} = props
   const [subjectsArray, setSubjectsArray] = useState([])
   const [subjectId, setSubjectId] = useState(null)
   const [selectedDate, setSelectedDate] = React.useState(moment().format('YYYY-MM-DD'));
-
+  const [isVisible, setIsVisible] = useState(false)
+  const [isError, setIsError] = useState(false)
+  let activeElement = null;
   let subjects:any = []
-  const getRegistry = () => {
-    journalService.getRegistry('2019-12-08')
-  }
   const getSubjects = () => {
     subjects = registry && registry.subjects.length && registry.subjects.map((el:any) => {
       return(
@@ -30,11 +30,30 @@ function GetRegistry(props:any){
   }
   const changeSubjectId = (id:any) => {
     setSubjectId(id)
+    setIsError(false)
+    setIsVisible(false)
   }
   const changeDate = (date:any) => {
     let currentDate = moment(date).format('YYYY-MM-DD') 
     setSelectedDate(currentDate);
+    setIsVisible(false)
     setSubjectId(null)
+    setSubjectsArray([])
+  }
+  const onApply = () => {
+    if(subjectId !== null){
+      setIsVisible(true)
+      setIsError(false)
+    }else {
+      setIsVisible(false)
+      setIsError(true)
+    }
+  }
+  if(isVisible){
+    activeElement = <GetRegistryTable registry={registry} subjectId={subjectId}/>
+  }
+  if(isError){
+    activeElement = <h3>Choose subject!!!</h3>
   }
   useEffect(() => {
     (async function fetchData(){
@@ -51,43 +70,11 @@ function GetRegistry(props:any){
     <Grid container justify='center' alignItems='center'>
       <Calendar selectedDate={selectedDate} changeDate={(date:any) => changeDate(date)}/>
       <SubjectSelect subjects={subjectsArray} changeSubjectId={(id:any)=>changeSubjectId(id)}/>
+      <Button variant='contained' color='primary' onClick={onApply} className='ApplyBtn'>APPLY</Button>
     </Grid>
-    { subjectId === null ? null :
-      <Grid container justify='center' alignItems='center' direction='column' >
-        <Grid item xs={12} className='tableWrapper'>
-          <table>
-            <tbody>
-              <tr>
-                <th>STUDENTS LIST</th>
-                {
-                  registry && registry.subjects.length > 0 && registry.subjects.filter((el:any) => el.subject.id === subjectId)
-                    .map((el:any) => {
-                      return(
-                        <th key={el.subject.id}>{el.subject.name}</th>
-                      )
-                    })
-                }
-              </tr>
-            {
-              registry && registry.subjects.length > 0 && registry.subjects.filter((el:any) => el.subject.id === subjectId)
-                .map((el:any) => {
-                  return(
-                    el.users.map((user:any) => {
-                      return(
-                        <tr key={user.id}>
-                          <td>{user.firstName} {user.lastName}</td>
-                          <td>{user.isPresent === true ? <p>+</p> :<p>-</p>}</td>
-                        </tr>
-                      )
-                    })
-                  )
-                })
-            }
-            </tbody>
-          </table>
-        </Grid>
-      </Grid>
-    }
+    <Grid container justify='center' alignItems='center'>
+      {activeElement}
+    </Grid>
     </>
   )
 }

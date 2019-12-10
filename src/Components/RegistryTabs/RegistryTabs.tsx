@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SetRegistry from '../SetRegistry'
 import GetRegistry from '../GetRegistry'
+import { useTranslation } from 'react-i18next'
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function RegistryTabs(props:any) {
+  const { t } = useTranslation()
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -76,8 +79,8 @@ export default function RegistryTabs(props:any) {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="Set absent"{...a11yProps(0)} />
-          <LinkTab label="Get absent"{...a11yProps(1)} />
+          <LinkTab label={t('SetAbsent')}{...a11yProps(0)} />
+          <LinkTab label={t('GetAbsent')}{...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

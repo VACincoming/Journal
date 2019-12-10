@@ -7,7 +7,10 @@ import { bindActionCreators } from 'redux'
 import { withJournalService } from '../../hoc';
 import {fetchGetAllUsers, fetchSubjects} from '../../actions'
 import {connect} from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
 function SetRegistry(props:any){
+  const {t} = useTranslation()
   const {subjects, users, fetchGetAllUsers, fetchSubjects, journalService} = props
   const [registry, setRegistry] = useState([])
   const [subjectId, setSubjectId] = useState(null)
@@ -71,8 +74,8 @@ function SetRegistry(props:any){
             <table>
               <tbody>
                 <tr>
-                  <th>STUDENTS LIST</th>
-                  <th>Absent</th>
+                  <th>{t("StudentsList")}</th>
+                  <th>{t("Absent")}</th>
                 </tr>
               {
                 users && users.filter((user:any) => user.role === 'STUDENT' || user.role === 'MONITOR')
@@ -88,9 +91,9 @@ function SetRegistry(props:any){
               </tbody>
           </table>
         </Grid>
-        <Button variant="contained" color="primary" className='sentBtn' onClick={setAllData}>SEND</Button>
-        { isSubjectSelect  ? null : <h3 style={{"color": "#c70000f2"}}>You need to choose subject</h3>}
-        { isSuccess ? <h3>Success!</h3> : null}
+        <Button variant="contained" color="primary" className='sentBtn' onClick={setAllData}>{t("Send")}</Button>
+              { isSubjectSelect  ? null : <h3 style={{"color": "#c70000f2"}}>{t("SetRegistryError")}</h3>}
+        { isSuccess ? <h3>{t("Success")}</h3> : null}
       </Grid>
     </>
   )

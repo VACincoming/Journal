@@ -12,7 +12,7 @@ const Calendar: React.FC<any> = (props) => {
         autoOk
         variant="inline"
         inputVariant="outlined"
-        label="With keyboard"
+        label="Calendar"
         format="DD/MM/YYYY"
         value={selectedDate}
         InputAdornmentProps={{ position: "start" }}
