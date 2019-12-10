@@ -21,7 +21,7 @@ function GetRegistry(props:any){
   let activeElement = null;
   let subjects:any = []
   const getSubjects = () => {
-    subjects = registry && registry.subjects.length && registry.subjects.map((el:any) => {
+    subjects = registry && registry.subjects && registry.subjects.length && registry.subjects.map((el:any) => {
       return(
         el.subject
       )
@@ -67,7 +67,7 @@ function GetRegistry(props:any){
 
   return(
     <>
-    <Grid container justify='center' alignItems='center'>
+    <Grid container justify='center' alignItems='center' style={{marginTop: '30px'}}>
       <Calendar selectedDate={selectedDate} changeDate={(date:any) => changeDate(date)}/>
       <SubjectSelect subjects={subjectsArray} changeSubjectId={(id:any)=>changeSubjectId(id)}/>
       <Button variant='contained' color='primary' onClick={onApply} className='ApplyBtn'>APPLY</Button>
