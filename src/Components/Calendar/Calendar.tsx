@@ -1,6 +1,5 @@
 import React from 'react'
 import MomentUtils from '@date-io/moment';
-import moment from 'moment'
 import './calendar.css'
 import { KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 

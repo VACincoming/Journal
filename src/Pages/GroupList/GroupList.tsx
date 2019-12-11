@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './groupList.css'
 import Header from '../../Components/Header'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +12,7 @@ import GetRegistry from '../../Components/GetRegistry'
 import moment from 'moment'
 function GroupList(props:any){
   const { t } = useTranslation()
-  const {fetchGetAllUsers, fetchSchedule, users, user, schedule, fetchRegistry, registry} = props
+  const {fetchGetAllUsers, users, user, fetchRegistry, registry} = props
   let activeComponent = null
   useEffect(() => {
     fetchGetAllUsers()

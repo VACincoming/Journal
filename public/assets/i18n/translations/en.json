@@ -12,6 +12,7 @@
   "GetAbsent": "GET ABSENT",
   "Subject": "Subject",
   "StudentsList": "STUDENTS LIST",
+  "Mail": "Mail",
   "Absent": "Absent",
   "Send": "Send",
   "SetRegistryError": "You need to choose subject",

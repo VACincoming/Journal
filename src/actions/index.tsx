@@ -1,5 +1,3 @@
-import JournalService from "../services/journal-service"
-
 const userLoaded = (newUser:any) => {
   return{
     type: 'FETCH_USER_SUCCESS',

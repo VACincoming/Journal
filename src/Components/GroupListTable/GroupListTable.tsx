@@ -1,10 +1,10 @@
 import 'date-fns';
 import React from 'react'
 import './groupListTable.css'
-import Calendar from '../Calendar'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { useTranslation } from 'react-i18next'
+
+
 const GroupListTable: React.FC<any> = (props) =>{
   const {t} = useTranslation()
   const {users} = props
@@ -16,8 +16,8 @@ const GroupListTable: React.FC<any> = (props) =>{
             <tbody>
               <tr>
                 <th>№</th>
-                <th>STUDENTS LIST</th>
-                <th>Mail</th>
+                <th>{t('StudentsList')}</th>
+                <th>{t("Mail")}</th>
               </tr>
             {
               users && users.filter((user:any) => user.role === 'STUDENT' || user.role === 'MONITOR')

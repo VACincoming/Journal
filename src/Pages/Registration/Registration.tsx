@@ -45,21 +45,11 @@ const useStyles = makeStyles(theme => ({
 function SignUp(props:any) {
   let history = useHistory();
   const classes = useStyles();
-  const [confirmPassword, setConfirmPassword] = useState('');
   const {fetchLoaderOn, fetchLoaderOff, loading} = props
-/*   let isFilledFields = false;
- */  let isPasswordMatch = true;
-  //let isActive = false;
-  async function signUp(){
-    fetchLoaderOn()
-    try{
-      await props.journalService.signUp(formData)
-      history.push("/ActivationPage")
-    }catch(err){
-      console.log(err)
-    }
-    fetchLoaderOff()
-  }
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isFilledFields, setIsFilledFields] = useState(true)
+  const [isPasswordMatch, setIsPasswordMatch] = useState(true)
+  const [isActive, setIsActive] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -67,13 +57,30 @@ function SignUp(props:any) {
     password: '',
     username: ''
   })
-
-/*   if(formData.name.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1){
-  isFilledFields = true;
-  } else isFilledFields = false; */
-  if(confirmPassword.length > 1 && formData.password.length > 1 && confirmPassword === formData.password){
-    isPasswordMatch = true;
-  } else isPasswordMatch = false;
+  const isValid = () => {
+    console.log(confirmPassword === formData.password)
+    console.log(formData.firstName.length > 1)
+    console.log(formData.lastName.length > 1)
+    console.log(formData.email.length > 1)
+    console.log(formData.username.length > 1)
+    console.log(formData.password.length > 1)
+    if(formData.firstName.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1 && (confirmPassword === formData.password)){
+      return true
+    }else return false
+  }
+  async function signUp(){
+    if(isValid()){
+      fetchLoaderOn()
+      try{
+        await props.journalService.signUp(formData)
+        history.push("/ActivationPage")
+      }catch(err){
+        console.log(err)
+      }
+      fetchLoaderOff()
+    }
+   else setIsFilledFields(false)
+  }
 
   function handleSubmit(event:any){
     event.preventDefault()
@@ -91,7 +98,7 @@ function SignUp(props:any) {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="name"
+                name="firstName"
                 variant="filled"
                 required
                 fullWidth
@@ -163,7 +170,7 @@ function SignUp(props:any) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Grid>
-            { !isPasswordMatch ?  <p>Enter right passwords</p> : null }
+            { !isFilledFields ?  <p style={{color:"red"}}>Filled all fields</p> : null }
           </Grid>
           <Button
             type="submit"
@@ -172,7 +179,6 @@ function SignUp(props:any) {
             color="primary"
             className={classes.submit}
             onClick={signUp}
-            disabled={loading}
           >
             Sign Up
           </Button>
