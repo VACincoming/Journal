@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-//import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { Rabbit as Button } from 'react-button-loaders'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,11 +7,12 @@ import Container from '@material-ui/core/Container';
 import './login.css'
 import Logo from '../../assets/img/logo.png'
 import TextField from '@material-ui/core/TextField'
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import { withJournalService } from '../../hoc';
 import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff, fetchUserRequest} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -82,7 +83,7 @@ function SignIn(props:any) {
       <div className={classes.paper}>
         <img className='logo' src={Logo} alt="logo"></img>
         <h3 style={{textAlign: 'center'}}>Welcome to the Students System Management</h3>
-        <h3 style={{marginBottom: '0px'}}>Please Log in with your email or username</h3>
+        <h3 style={{marginBottom: '0px', textAlign:'center'}}>Please Log in with your email or username</h3>
         <TextField
           id="outlined-basic"
           label="Email/Username"
@@ -108,32 +109,26 @@ function SignIn(props:any) {
         {
           isError ? <h3 style={{"color": "#c70000f2"}}>{errorText}</h3> : null
         }
-           {/*  <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className='submit'
-              style={{marginTop:'20px', minWidth: '200px'}}
-              onClick={signIn}
-              disabled={props.loading}
-            > */}
+        <Grid item>
+          <ButtonGroup color="primary" aria-label="small primary button group" style={{marginTop: "16px"}}>
             <Button
             onClick={signIn}
             state={isLoading}
+            className='submit'
             >
-            SIGN IN
+              SIGN IN
             </Button>
-          <Link to='/registration'>
             <Button
               type="submit"
               variant="contained"
-              color="secondary"
-              className='submit'
-              style={{marginTop:'20px', minWidth: '200px'}}
+              color="primary"
+              className='submit reg'
+              onClick={() => history.push("/registration")}
             >
               Registration
             </Button>
-          </Link>
+          </ButtonGroup>
+        </Grid>
       </div> 
     </Container>
   );

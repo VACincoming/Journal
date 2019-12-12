@@ -5,3 +5,10 @@
 a{
   text-decoration: none;
 }
+.submit{
+  height: 30px !important;
+  max-width: 150px !important;
+}
+.reg{
+  background: rgb(25, 118, 210) !important;
+}

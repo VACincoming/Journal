@@ -11,13 +11,14 @@ import moment from 'moment'
 import SubjectSelect from '../SubjectSelect'
 import GetRegistryTable from '../GetRegistryTable'
 
-function GetRegistry(props:any){
+const GetRegistry:React.FC<any> = (props) => {
   const {fetchRegistry, registry} = props
   const [subjectsArray, setSubjectsArray] = useState([])
   const [subjectId, setSubjectId] = useState(null)
   const [selectedDate, setSelectedDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [isVisible, setIsVisible] = useState(false)
   const [isError, setIsError] = useState(false)
+  let mainContent = null;
   let activeElement = null;
   let subjects:any = []
   const getSubjects = () => {
@@ -33,7 +34,7 @@ function GetRegistry(props:any){
     setIsError(false)
     setIsVisible(false)
   }
-  const changeDate = (date:any) => {
+  const changeDate = (date:string) => {
     let currentDate = moment(date).format('YYYY-MM-DD') 
     setSelectedDate(currentDate);
     setIsVisible(false)
@@ -50,10 +51,16 @@ function GetRegistry(props:any){
     }
   }
   if(isVisible){
-    activeElement = <GetRegistryTable registry={registry} subjectId={subjectId}/>
+    activeElement = 
+      <Grid container justify='center' alignItems='center'>
+        <GetRegistryTable registry={registry} subjectId={subjectId}/>
+      </Grid>
   }
   if(isError){
-    activeElement = <h3>Choose subject!!!</h3>
+    activeElement = 
+      <Grid container justify='center' alignItems='center'>
+        <h3>Choose subject!!!</h3>
+      </Grid>
   }
   useEffect(() => {
     (async function fetchData(){
@@ -64,17 +71,25 @@ function GetRegistry(props:any){
     getSubjects()
   }, [registry, selectedDate]) 
 
-
-  return(
-    <>
+  if(subjectsArray && subjectsArray.length > 0){
+    mainContent = 
     <Grid container justify='center' alignItems='center' style={{marginTop: '30px'}}>
       <Calendar selectedDate={selectedDate} changeDate={(date:any) => changeDate(date)}/>
       <SubjectSelect subjects={subjectsArray} changeSubjectId={(id:any)=>changeSubjectId(id)}/>
       <Button variant='contained' color='primary' onClick={onApply} className='ApplyBtn'>APPLY</Button>
     </Grid>
-    <Grid container justify='center' alignItems='center'>
-      {activeElement}
+  }else {
+    mainContent = 
+    <Grid container direction='column' justify='center' alignItems='center' style={{marginTop: '30px'}}>
+      <Calendar selectedDate={selectedDate} changeDate={(date:any) => changeDate(date)}/>
+      <h3 style={{marginLeft: '20px', marginRight: '20px'}}>No subjects on this date</h3>
     </Grid>
+  }
+
+  return(
+    <>
+      {mainContent}
+      {activeElement}
     </>
   )
 }

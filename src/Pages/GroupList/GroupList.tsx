@@ -8,7 +8,6 @@ import {fetchGetAllUsers, fetchLoaderOn, fetchLoaderOff, fetchSchedule, fetchReg
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import RegistryTabs from '../../Components/RegistryTabs'
-import GetRegistry from '../../Components/GetRegistry'
 import moment from 'moment'
 function GroupList(props:any){
   const { t } = useTranslation()
@@ -25,9 +24,10 @@ function GroupList(props:any){
     <RegistryTabs 
       users={users}
       registry={registry}
+      role={user.role}
     />
   }else if(user && user.role === 'ADMIN'){
-    activeComponent = <GetRegistry />
+    activeComponent = <RegistryTabs users={users} role={user.role}/>
   }else activeComponent = <GroupListTable users={users}/>
   return(
     <>

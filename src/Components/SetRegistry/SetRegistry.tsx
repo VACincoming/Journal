@@ -57,6 +57,7 @@ function SetRegistry(props:any){
     2) Find in state object with this id and delete it
     3) set new Object in new state
   */
+ 
   useEffect(() => {
     (async function fetchData(){
       await fetchGetAllUsers()

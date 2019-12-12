@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import SetRegistry from '../SetRegistry'
 import GetRegistry from '../GetRegistry'
 import { useTranslation } from 'react-i18next'
+import GroupListTable from '../../Components/GroupListTable'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -65,7 +66,7 @@ export default function RegistryTabs(props:any) {
   const { t } = useTranslation()
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const {users, subjects, role} = props
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -79,12 +80,14 @@ export default function RegistryTabs(props:any) {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label={t('SetAbsent')}{...a11yProps(0)} />
+          {role === "MONITOR" && <LinkTab label={t('SetAbsent')}{...a11yProps(0)} />}
+          {role === "ADMIN" && <LinkTab label='Group List' {...a11yProps(0)} />}
           <LinkTab label={t('GetAbsent')}{...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <SetRegistry subjects={props.subjects} users={props.users}/>
+       {role === "MONITOR" && <SetRegistry subjects={props.subjects} users={props.users}/>}
+       {role === "ADMIN" && <GroupListTable users={users}/>}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <GetRegistry />

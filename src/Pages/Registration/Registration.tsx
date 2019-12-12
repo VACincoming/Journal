@@ -45,11 +45,11 @@ const useStyles = makeStyles(theme => ({
 function SignUp(props:any) {
   let history = useHistory();
   const classes = useStyles();
-  const {fetchLoaderOn, fetchLoaderOff, loading} = props
+  const {fetchLoaderOn, fetchLoaderOff} = props
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isFilledFields, setIsFilledFields] = useState(true)
-  const [isPasswordMatch, setIsPasswordMatch] = useState(true)
-  const [isActive, setIsActive] = useState(false)
+  const [errorMsg, setErrMsg] = useState([])
+  const [isError, setIsError] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -58,26 +58,23 @@ function SignUp(props:any) {
     username: ''
   })
   const isValid = () => {
-    console.log(confirmPassword === formData.password)
-    console.log(formData.firstName.length > 1)
-    console.log(formData.lastName.length > 1)
-    console.log(formData.email.length > 1)
-    console.log(formData.username.length > 1)
-    console.log(formData.password.length > 1)
     if(formData.firstName.length > 1 && formData.lastName.length > 1 && formData.email.length > 1 && formData.username.length > 1 && formData.password.length > 1 && (confirmPassword === formData.password)){
       return true
     }else return false
   }
   async function signUp(){
     if(isValid()){
-      fetchLoaderOn()
+     // fetchLoaderOn()
       try{
+        setIsError(false)
         await props.journalService.signUp(formData)
         history.push("/ActivationPage")
       }catch(err){
-        console.log(err)
+        let error = err.message.split("; ")
+        setErrMsg(error)
+        setIsError(true)
       }
-      fetchLoaderOff()
+      //fetchLoaderOff()
     }
    else setIsFilledFields(false)
   }
@@ -90,7 +87,7 @@ function SignUp(props:any) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" onClick={()=>console.log(errorMsg, isError)}>
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -170,7 +167,15 @@ function SignUp(props:any) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Grid>
-            { !isFilledFields ?  <p style={{color:"red"}}>Filled all fields</p> : null }
+            { !isFilledFields ?  <p style={{color:"#c70000f2"}}>Filled all fields</p> : null }
+            <div style={{textAlign: 'center'}}>
+            { isError ? errorMsg.map((err:any) => {
+                return(
+                  <p style={{color:"#c70000f2"}} key={err}>{err}</p>
+                )
+              }) : null
+            }
+          </div>
           </Grid>
           <Button
             type="submit"

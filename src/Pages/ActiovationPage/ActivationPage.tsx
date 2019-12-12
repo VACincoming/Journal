@@ -1,11 +1,13 @@
 import React from 'react'
 import './activationPage.css'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 export default function ActivationPage(){
+  const history = useHistory()
   return(
-    <>
+    <div style={{textAlign: 'center'}}>
       <h2>Please, check your mail and confirm your account</h2>
-      <Link to="/"><h3>Login Page</h3></Link>
-    </>
+      <Button variant='contained' color='primary' onClick={() => history.push("/")}>Login Page</Button>
+    </div>
     )
 }
