@@ -1,4 +1,6 @@
-const userLoaded = (newUser:any) => {
+import {IUser, IUsers, ISchedule, IScheduleTime, IRegistry, ISubjects} from '../interfaces/Interfaces'
+
+const userLoaded = (newUser:IUser) => {
   return{
     type: 'FETCH_USER_SUCCESS',
     payload: newUser
@@ -13,25 +15,25 @@ const loaderOn = () => {
 const loaderOff = () => {
   return {type: 'FETCH_LOADER_OFF'}
 }
-const scheduleSuccess = (schedule:any) => {
+const scheduleSuccess = (schedule:ISchedule) => {
   return {type: 'FETCH_SCHEDULE_SUCCESS', payload: schedule}
 }
-const scheduleTimeSuccess = (scheduleTime:any) => {
+const scheduleTimeSuccess = (scheduleTime:IScheduleTime) => {
   return {type: 'FETCH_SCHEDULE_TIME_SUCCESS', payload: scheduleTime}
 } 
-const allUsersLoaded = (newUsers:any) => {
+const allUsersLoaded = (newUsers:IUsers) => {
   return{
     type: 'FETCH_ALL_USERS_SUCCESS',
     payload: newUsers
   }
 }
-const registryLoaded = (registry:any) => {
+const registryLoaded = (registry:IRegistry) => {
   return {
     type: 'FETCH_REGISTRY_SUCCESS',
     payload: registry
   }
 }
-const subjectsLoaded = (subjects:any) => {
+const subjectsLoaded = (subjects:ISubjects) => {
   return{
     type: "FETCH_SUBJECTS_SUCCESS",
     payload: subjects
@@ -41,13 +43,13 @@ const fetchSubjects = (journalService:any) => () => (dispatch:any) => {
   return journalService.getSubjects()
     .then((subjects:any) => dispatch(subjectsLoaded(subjects)))
 }
-const fetchRegistry = (journalService:any) => (date:any) => (dispatch:any) => {
+const fetchRegistry = (journalService:any) => (date:string) => (dispatch:any) => {
   return journalService.getRegistry(date)
     .then((registry:any) => dispatch(registryLoaded(registry)))
 }
 const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
   return journalService.getAllUsers()
-    .then((users:any) => dispatch(allUsersLoaded(users)))
+    .then((users:IUsers) => dispatch(allUsersLoaded(users)))
 }
 const fetchGetUser = (journalService:any) => () => (dispatch:any) => {
     return journalService.getUser()
@@ -63,7 +65,7 @@ const fetchScheduleTime = (journalService:any) => () => (dispatch:any) => {
   return journalService.getScheduleTime()
     .then((scheduleTime:any) => dispatch(scheduleTimeSuccess(scheduleTime.data.data)))
 }
-const fetchUserLoaded = () => (user:any) => (dispatch:any) => {
+const fetchUserLoaded = () => (user:IUser) => (dispatch:any) => {
   return dispatch(userLoaded(user))
 }
 const fetchUserRequest = () => () => (dispatch:any) => {

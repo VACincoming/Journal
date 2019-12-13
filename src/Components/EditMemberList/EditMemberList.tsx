@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import { withJournalService } from '../../hoc';
 import { fetchGetAllUsers, fetchLoaderOn,fetchLoaderOff } from '../../actions'
 import { useTranslation } from 'react-i18next'
-import {IUsers} from '../../interfaces/Interfaces'
+import {IUsers, IUser} from '../../interfaces/Interfaces'
 
 type EditMemberListProps = {
   users: IUsers[],
@@ -19,14 +19,13 @@ type EditMemberListProps = {
 }
 
 const EditMemberList: React.FC<EditMemberListProps> = ({
-  fetchGetAllUsers, users, journalService, fetchLoaderOn,fetchLoaderOff, loading}) => {
+  fetchGetAllUsers, users, journalService, fetchLoaderOn, fetchLoaderOff, loading}) => {
   let listItem = null;
   const { t } = useTranslation()
   const [openEditMemberModal, setOpenEditMemberModal] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState('');
-
-  const [selectedUsers, setSelectedUsers] = useState([])
-  let usersVariable:any = [];
+  const [selectedUsers, setSelectedUsers] = useState<IUsers[] | []>([])
+  let usersVariable: IUsers[] = [];
   const member = [
     {"title": t("Monitors"), "name": "Monitors"},
     {"title": t("Students"), "name": "Students"}
@@ -35,10 +34,10 @@ const EditMemberList: React.FC<EditMemberListProps> = ({
     setSelectedMembers(title)
 
     if(title === 'Students'){
-      usersVariable = users.filter((el:any) => el.role === 'STUDENT')
+      usersVariable = users.filter((el:IUser):boolean => el.role === 'STUDENT')
       setSelectedUsers(usersVariable)
     }else if(title === 'Monitors'){
-      usersVariable = users.filter((el:any) => el.role ==='MONITOR')
+      usersVariable = users.filter((el:IUser):boolean => el.role ==='MONITOR')
       setSelectedUsers(usersVariable)
     }
     setOpenEditMemberModal(true)
@@ -69,10 +68,10 @@ const EditMemberList: React.FC<EditMemberListProps> = ({
   )
 }
 
-const mapStateToProps = (state:any) => {
+const mapStateToProps = ({users, loading}:{users: IUsers[], loading:boolean}) => {
   return {
-    users: state.users,
-    loading: state.loading
+    users,
+    loading
   }
 }
 

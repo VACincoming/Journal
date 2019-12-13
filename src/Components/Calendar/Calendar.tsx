@@ -3,8 +3,12 @@ import MomentUtils from '@date-io/moment';
 import './calendar.css'
 import { KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 
-const Calendar: React.FC<any> = (props) => {
-  const {selectedDate, changeDate} = props
+interface ICalendar{
+  selectedDate: string,
+  changeDate: (date:string | null | Date) => void
+}
+
+const Calendar: React.FC<ICalendar> = ({selectedDate, changeDate}) => {
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <KeyboardDatePicker

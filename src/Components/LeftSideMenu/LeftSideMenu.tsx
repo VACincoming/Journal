@@ -49,7 +49,7 @@ function LeftSideMenu(props:any) {
           <div>
             <Link to='/schedule'>
               <ListItem button className='listItem'>
-                <ListItemText primary={t('Schedule')}/>
+                <ListItemText primary={t('Sсhedule')}/>
               </ListItem>
             </Link>
             <Divider />

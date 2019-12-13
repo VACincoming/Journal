@@ -66,7 +66,7 @@ export default function RegistryTabs(props:any) {
   const { t } = useTranslation()
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const {users, subjects, role} = props
+  const {users, role} = props
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -81,7 +81,7 @@ export default function RegistryTabs(props:any) {
           aria-label="nav tabs example"
         >
           {role === "MONITOR" && <LinkTab label={t('SetAbsent')}{...a11yProps(0)} />}
-          {role === "ADMIN" && <LinkTab label='Group List' {...a11yProps(0)} />}
+          {role === "ADMIN" && <LinkTab label={t('GroupList')} {...a11yProps(0)} />}
           <LinkTab label={t('GetAbsent')}{...a11yProps(1)} />
         </Tabs>
       </AppBar>

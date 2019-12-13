@@ -14,6 +14,7 @@ function Schedule(props:any){
   const { t } = useTranslation()
   const [weekType, setWeekType] = useState('ODD')
   const {fetchSchedule,  fetchScheduleTime, schedule, scheduleTime} = props
+  let buttonText = null
   async function changeWeek(){
     if(weekType === 'ODD') {
       setWeekType('EVEN')
@@ -31,7 +32,11 @@ function Schedule(props:any){
   useEffect(() => {
     fetchScheduleTime()
   }, [fetchScheduleTime])
-  
+  if(weekType === 'ODD'){
+    buttonText = <span> {t('Odd')}</span>
+  }else if(weekType === 'EVEN'){
+    buttonText = <span> {t('Even')}</span>
+  }
   return(
     <div className="sheduleWrapper">
       <Header title={t('Shedule')}/>
@@ -41,7 +46,7 @@ function Schedule(props:any){
             className='changeWeekBtn'
             onClick={changeWeek}
             >
-            {weekType} WEEK
+            {buttonText}
           </Button>
           <Button 
             className='changeGroupBtn'

@@ -3,7 +3,7 @@
   "login": "Email",
   "GroupList": "Group List",
   "MainPage": "Main Page",
-  "Shedule": "Shedule",
+  "Sсhedule": "Sсhedule",
   "AdminTools": "Admin Tools",
   "Text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna eget est lorem ipsum dolor sit amet consectetur adipiscing. Eu augue ut lectus arcu. Tellus orci ac auctor augue mauris augue. Id semper risus in hendrerit gravida rutrum quisque. Magna fringilla urna porttitor rhoncus dolor purus. Amet venenatis urna cursus eget. In fermentum et sollicitudin ac orci phasellus egestas tellus. Enim diam vulputate ut pharetra sit. Mattis vulputate enim nulla aliquet porttitor lacus luctus. Aliquam ultrices sagittis orci a scelerisque purus semper. Ut ornare lectus sit amet. Turpis in eu mi bibendum neque egestas congue quisque egestas. Scelerisque in dictum non consectetur a erat nam at. Vivamus at augue eget arcu dictum varius duis at consectetur. Mauris rhoncus aenean vel elit. Mi ipsum faucibus vitae aliquet nec. Eu volutpat odio facilisis mauris. Venenatis lectus magna fringilla urna porttitor rhoncus. Cras semper auctor neque vitae tempus quam pellentesque nec nam. Massa eget egestas purus viverra accumsan.",
   "Monitors": "MONITORS",
@@ -16,5 +16,8 @@
   "Absent": "Absent",
   "Send": "Send",
   "SetRegistryError": "You need to choose subject",
-  "Success": "Success"
+  "Success": "Success",
+  "Odd": "ODD WEEK",
+  "Even": "EVEN WEEK",
+  "EditMember": "EDIT MEMBERS"
 }

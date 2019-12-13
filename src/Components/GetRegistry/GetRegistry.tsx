@@ -10,9 +10,13 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 import SubjectSelect from '../SubjectSelect'
 import GetRegistryTable from '../GetRegistryTable'
+import {IRegistry} from '../../interfaces/Interfaces'
+interface IGetRegistry{
+  fetchRegistry: any,
+  registry: any
+}
 
-const GetRegistry:React.FC<any> = (props) => {
-  const {fetchRegistry, registry} = props
+const GetRegistry:React.FC<IGetRegistry> = ({fetchRegistry, registry}) => {
   const [subjectsArray, setSubjectsArray] = useState([])
   const [subjectId, setSubjectId] = useState(null)
   const [selectedDate, setSelectedDate] = React.useState(moment().format('YYYY-MM-DD'));
