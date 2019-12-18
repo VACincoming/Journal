@@ -82,7 +82,7 @@ function SignIn(props:any) {
       <CssBaseline />
       <div className={classes.paper}>
         <img className='logo' src={Logo} alt="logo"></img>
-        <h3 style={{textAlign: 'center'}}>Welcome to the Students System Management</h3>
+        <h3 style={{textAlign: 'center'}}>Welcome to Students Management System</h3>
         <h3 style={{marginBottom: '0px', textAlign:'center'}}>Please Log in with your email or username</h3>
         <TextField
           id="outlined-basic"

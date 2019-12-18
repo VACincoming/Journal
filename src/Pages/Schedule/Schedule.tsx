@@ -39,7 +39,7 @@ function Schedule(props:any){
   }
   return(
     <div className="sheduleWrapper">
-      <Header title={t('Shedule')}/>
+      <Header title={t('Sсhedule')}/>
       <Grid container justify='center' direction='row' alignItems='center' className='buttonContainer'>
         <Grid >
           <Button 
