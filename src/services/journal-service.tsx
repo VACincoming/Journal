@@ -29,12 +29,8 @@ export default class JournalService{
   }
   getUser(){
     this.wrapperGetRequest(`${url}users/current`)
-    .then((user:any) => {
-      console.log(user)
-      return(user.data.data)
-    })
+    .then((user:any) => user.data.data)
     .catch((err) => {
-      console.log(err)
       if(err.toString().includes('401')){
         localStorage.removeItem("Token")
       }
