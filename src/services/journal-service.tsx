@@ -6,6 +6,50 @@ export default class JournalService{
     "Authorization": ''
   }
 
+  wrapperGetRequest(url:string){
+    if(localStorage.getItem("Token")){
+      this.header.Authorization = localStorage.getItem("Token")!.toString();
+    }
+      return axios({
+        method: 'get',
+        url,
+        headers: this.header
+      }).catch((err:any) => {
+        throw new Error(err.response.data.message)
+      })
+  }
+  getSchedule(weekType:string){
+    this.wrapperGetRequest(`${url}schedule?week_type=${weekType}`)
+      .then((res:any) => res.data.data)
+      .catch((err:any) => console.log(err))
+  }
+  getScheduleTime(){
+    this.wrapperGetRequest(`${url}schedule/time`)
+      .then((res:any) => res.data.data)
+  }
+  getUser(){
+    this.wrapperGetRequest(`${url}users/current`)
+    .then((user:any) => {
+      console.log(user)
+      return(user.data.data)
+    })
+    .catch((err) => {
+      console.log(err)
+      if(err.toString().includes('401')){
+        localStorage.removeItem("Token")
+      }
+    })
+  }
+  getAllUsers(){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'get',
+      url: `${url}users`,
+      headers: this.header
+    }).then((users:any) => {return users.data.data})
+      .catch((err) => {return err})
+  }
+
   signIn(username:string, password:string){
     const data = {username, password}
     return axios({
@@ -31,44 +75,7 @@ export default class JournalService{
       throw new Error(err.response.data.error)
     })
   }
-  getSchedule(weekType:string){
-    this.header.Authorization = localStorage.getItem("Token")!.toString();
-    return axios({
-      method: 'get',
-      url: `${url}schedule?week_type=${weekType}`,
-      headers: this.header
-    }).then((res:any) => res)
-    .catch((err) => {return err})
-  }
-  getScheduleTime(){
-    this.header.Authorization = localStorage.getItem("Token")!.toString();
-    return axios({
-      method: 'get',
-      url: `${url}schedule/time`,
-      headers: this.header
-    }).catch((err) => {return err})
-  }
-  getUser(){
-    this.header.Authorization = localStorage.getItem("Token")!.toString();
-    return axios({
-      method: 'get',
-      url: `${url}users/current`,
-      headers: this.header
-    }).catch((err) => {
-      if(err.toString().includes('401')){
-        localStorage.removeItem("Token")
-      }
-    })
-  }
-  getAllUsers(){
-    this.header.Authorization = localStorage.getItem("Token")!.toString();
-    return axios({
-      method: 'get',
-      url: `${url}users`,
-      headers: this.header
-    }).then((users:any) => {return users.data.data})
-      .catch((err) => {return err})
-  }
+
   changeRole(id:number, role:string, email:string, username:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     if(role === 'STUDENT') role="MONITOR"

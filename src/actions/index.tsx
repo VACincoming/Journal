@@ -53,17 +53,17 @@ const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
 }
 const fetchGetUser = (journalService:any) => () => (dispatch:any) => {
     return journalService.getUser()
-      .then((user:any) => dispatch(userLoaded(user.data.data)))
-      .catch(() => null)
+      .then((user:any) => dispatch(userLoaded(user)))
+      .catch((err:any) => console.log(err))
 }
 const fetchSchedule = (journalService:any) => (weekType:string) => (dispatch:any) => {
   return journalService.getSchedule(weekType)
-    .then((schedule:any) => dispatch(scheduleSuccess(schedule.data.data)))
+    .then((schedule:any) => dispatch(scheduleSuccess(schedule)))
     .catch((err:any) => console.log(err))
 }
 const fetchScheduleTime = (journalService:any) => () => (dispatch:any) => {
   return journalService.getScheduleTime()
-    .then((scheduleTime:any) => dispatch(scheduleTimeSuccess(scheduleTime.data.data)))
+    .then((scheduleTime:any) => dispatch(scheduleTimeSuccess(scheduleTime)))
 }
 const fetchUserLoaded = () => (user:IUser) => (dispatch:any) => {
   return dispatch(userLoaded(user))
