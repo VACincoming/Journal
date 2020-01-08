@@ -19,22 +19,18 @@ export default class JournalService{
       })
   }
   getSchedule(weekType:string){
-    this.wrapperGetRequest(`${url}schedule?week_type=${weekType}`)
+    return this.wrapperGetRequest(`${url}schedule?week_type=${weekType}`)
       .then((res:any) => res.data.data)
       .catch((err:any) => console.log(err))
   }
   getScheduleTime(){
-    this.wrapperGetRequest(`${url}schedule/time`)
+    return this.wrapperGetRequest(`${url}schedule/time`)
       .then((res:any) => res.data.data)
   }
   getUser(){
-    this.wrapperGetRequest(`${url}users/current`)
-    .then((user:any) => {
-      console.log(user)
-      return(user.data.data)
-    })
+    return this.wrapperGetRequest(`${url}users/current`)
+    .then((user:any) => user.data.data)
     .catch((err) => {
-      console.log(err)
       if(err.toString().includes('401')){
         localStorage.removeItem("Token")
       }

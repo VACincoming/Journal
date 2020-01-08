@@ -69,6 +69,8 @@ const fetchUserLoaded = () => (user:IUser) => (dispatch:any) => {
   return dispatch(userLoaded(user))
 }
 const fetchUserRequest = () => () => (dispatch:any) => {
+  localStorage.removeItem("Token")
+  console.log('fetchUser', localStorage.getItem("Token"))
   return dispatch(userRequest())
 }
 const fetchLoaderOn = () => () => (dispatch:any) => {

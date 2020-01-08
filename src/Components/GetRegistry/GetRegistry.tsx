@@ -10,7 +10,6 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 import SubjectSelect from '../SubjectSelect'
 import GetRegistryTable from '../GetRegistryTable'
-import {IRegistry} from '../../interfaces/Interfaces'
 interface IGetRegistry{
   fetchRegistry: any,
   registry: any
