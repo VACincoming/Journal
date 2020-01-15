@@ -103,10 +103,8 @@ const mapDispatchToProps = (dispatch:any, ownProps:any) => {
     fetchRegistry: fetchRegistry(journalService)
   }, dispatch)
 }
-const mapStateToProps = (state:any) => {
-  return{
-    registry: state.registry,
-  }
+const mapStateToProps = ({registry}:{registry:any}) => {
+  return {registry}
 }
 
 export default withJournalService()(

@@ -7,6 +7,7 @@ interface IInitialState{
   scheduleTime: []
   registry: []
   subjects: []
+  language: string
 }
 const initialState:IInitialState = {
   user: [],
@@ -16,11 +17,17 @@ const initialState:IInitialState = {
   schedule: [],
   scheduleTime: [],
   registry: [],
-  subjects: []
+  subjects: [],
+  language: 'en'
 }
 
 const reducer = (state:any = initialState, action:any) => {
   switch(action.type){
+    case 'FETCH_LANGUAGE_SUCCESS':
+      return {
+        ...state,
+        language: action.payload,
+      }
     case 'FETCH_REGISTRY_SUCCESS':
       return{
         ...state,

@@ -6,6 +6,7 @@ const userLoaded = (newUser:IUser) => {
     payload: newUser
   }
 }
+
 const userRequest = () => {
   return{type: 'FETCH_USER_REQUEST'}
 }
@@ -37,6 +38,12 @@ const subjectsLoaded = (subjects:ISubjects) => {
   return{
     type: "FETCH_SUBJECTS_SUCCESS",
     payload: subjects
+  }
+}
+const changeLanguage = (language:string) => {
+  return {
+    type: "FETCH_LANGUAGE_SUCCESS",
+    payload: language
   }
 }
 const fetchSubjects = (journalService:any) => () => (dispatch:any) => {
@@ -79,7 +86,12 @@ const fetchLoaderOn = () => () => (dispatch:any) => {
 const fetchLoaderOff = () => () => (dispatch:any) => {
   return dispatch(loaderOff())
 }
+const fetchLanguage = () => (language:string) => (dispatch:any) => {
+  return dispatch(changeLanguage(language))
+}
 export {
+  fetchLanguage,
+  userLoaded,
   fetchRegistry,
   fetchSubjects,
   fetchScheduleTime,

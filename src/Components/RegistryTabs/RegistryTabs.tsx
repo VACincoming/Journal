@@ -9,7 +9,7 @@ import SetRegistry from '../SetRegistry'
 import GetRegistry from '../GetRegistry'
 import { useTranslation } from 'react-i18next'
 import GroupListTable from '../../Components/GroupListTable'
-
+import ExportToExcelTab from '../ExportToExcelTab'
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -83,6 +83,7 @@ export default function RegistryTabs(props:any) {
           {role === "MONITOR" && <LinkTab label={t('SetAbsent')}{...a11yProps(0)} />}
           {role === "ADMIN" && <LinkTab label={t('GroupList')} {...a11yProps(0)} />}
           <LinkTab label={t('GetAbsent')}{...a11yProps(1)} />
+          {(role === "ADMIN" || role === "MONITOR") && <LinkTab label={t('ExportToExcel')}{...a11yProps(2)} />}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -91,6 +92,10 @@ export default function RegistryTabs(props:any) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <GetRegistry />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <h1>export</h1>
+        {/* <ExportToExcelTab /> */}
       </TabPanel>
 
     </div>

@@ -19,5 +19,6 @@
   "Success": "Success",
   "Odd": "ODD WEEK",
   "Even": "EVEN WEEK",
-  "EditMember": "EDIT MEMBERS"
+  "EditMember": "EDIT MEMBERS",
+  "ExportToExcel": "Export to Excel" 
 }

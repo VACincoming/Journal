@@ -142,11 +142,8 @@ const mapDispatchToProps = (dispatch:any) => {
   }, dispatch)
 };
 
-const mapStateToProps = (state:any) => {
-  if(state){
-    return {loading: state.loading}
-  }
-  return {state}
+const mapStateToProps = ({loading}:{loading:boolean}) => {
+  return {loading}
 };
 
 export default withJournalService()(
