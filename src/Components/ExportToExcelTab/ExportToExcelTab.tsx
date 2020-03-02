@@ -1,8 +1,7 @@
-import 'date-fns';
+import MomentUtils from '@date-io/moment';
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
 import Button from '@material-ui/core/Button';
 import CloudDownloadIcon from '@material-ui/icons/CloudUpload';
 import {
@@ -15,6 +14,11 @@ const ExportToExcelTab = (props:any) => {
   const {exportToExcel} = props;
   const [firstSelectedDate, setFirstSelectedDate] = useState(moment().subtract(7, 'days').calendar());
   const [secondSelectedDate, setSecondSelectedDate] = useState(moment().format('MM-DD-YYYY'));
+  const [isRangeTrue, setIsRangeTrue] = useState(true);
+  useEffect(() => {
+    if(moment(firstSelectedDate).isAfter(secondSelectedDate)) setIsRangeTrue(false);
+    else setIsRangeTrue(true);
+  }, [firstSelectedDate, secondSelectedDate])
   const handleFirstDateChange = (date:any) => {
     setFirstSelectedDate(date);
   };
@@ -24,49 +28,44 @@ const ExportToExcelTab = (props:any) => {
   return (
     <>
       <Grid container direction="row" justify="center">
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="flex-end"
-        className="wrapperExport"
-        item
-        xs={6}
-      >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                autoOk
-                variant="inline"
-                format="dd/MM/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={firstSelectedDate}
-                onChange={handleFirstDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="dd/MM/yyyy"
-                margin="normal"
-                id="date-picker-inline2"
-                label="Date picker inline"
-                value={secondSelectedDate}
-                onChange={handleSecondDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          className="wrapperExport"
+          item
+          xs={12} sm={12} lg={8} xl={6}
+        >
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <KeyboardDatePicker
+              autoOk
+              variant="inline"
+              inputVariant="outlined"
+              label="Date From"
+              format="DD/MM/YYYY"
+              value={firstSelectedDate}
+              InputAdornmentProps={{ position: "start" }}
+              onChange={handleFirstDateChange}
+            />
+            <KeyboardDatePicker
+              autoOk
+              variant="inline"
+              inputVariant="outlined"
+              label="Date To"
+              format="DD/MM/YYYY"
+              value={secondSelectedDate}
+              InputAdornmentProps={{ position: "start" }}
+              onChange={handleSecondDateChange}
+            />
           </MuiPickersUtilsProvider>
           <Button
             variant="contained"
             color="default"
-            style={{marginBottom: "12px"}}
             startIcon={<CloudDownloadIcon />}
-            onClick={() => exportToExcel(moment(firstSelectedDate).format('YYYY-MM-DD'), moment(secondSelectedDate).format('YYYY-MM-DD'))}
+            disabled={!isRangeTrue}
+            onClick={() => console.log(isRangeTrue)}
+            //onClick={() => exportToExcel(moment(firstSelectedDate).format('YYYY-MM-DD'), moment(secondSelectedDate).format('YYYY-MM-DD'))}
           >
           Export
         </Button>
