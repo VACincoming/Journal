@@ -11,7 +11,7 @@ import {
 
 import './exportToExcelTab.css'
 const ExportToExcelTab = (props:any) => {
-  const {exportToExcel} = props;
+  const {exportToExcel, language} = props;
   const [firstSelectedDate, setFirstSelectedDate] = useState(moment().subtract(7, 'days').calendar());
   const [secondSelectedDate, setSecondSelectedDate] = useState(moment().format('MM-DD-YYYY'));
   const [isRangeTrue, setIsRangeTrue] = useState(true);
@@ -64,8 +64,7 @@ const ExportToExcelTab = (props:any) => {
             color="default"
             startIcon={<CloudDownloadIcon />}
             disabled={!isRangeTrue}
-            onClick={() => console.log(isRangeTrue)}
-            //onClick={() => exportToExcel(moment(firstSelectedDate).format('YYYY-MM-DD'), moment(secondSelectedDate).format('YYYY-MM-DD'))}
+            onClick={() => exportToExcel(moment(firstSelectedDate).format('YYYY-MM-DD'), moment(secondSelectedDate).format('YYYY-MM-DD'))}
           >
           Export
         </Button>

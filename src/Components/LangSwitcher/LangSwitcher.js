@@ -31,8 +31,8 @@ const LanguageSelector = ({language, fetchLanguage}) => {
     <div className='langSwitcher'>
       <FormControl className={classes.formControl}>
         <Select value={language} onChange={handleLanguage} displayEmpty className={classes.selectEmpty}>
-          <MenuItem value={'en'}>EN</MenuItem>
           <MenuItem value={'ua'}>UA</MenuItem>
+          <MenuItem value={'en'}>EN</MenuItem>
         </Select>
       </FormControl>
     </div>

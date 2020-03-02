@@ -6,7 +6,7 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: 'en',
+    lng: 'ua',
     backend: {
       loadPath: '/assets/i18n/{{ns}}/{{lng}}.json'
     },

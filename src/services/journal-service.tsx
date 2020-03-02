@@ -18,8 +18,8 @@ export default class JournalService{
         throw new Error(err.response.data.message)
       })
   }
-  getSchedule(weekType:string){
-    return this.wrapperGetRequest(`${url}schedule?week_type=${weekType}`)
+  getSchedule(weekType:string, currentLanguage:string){
+    return this.wrapperGetRequest(`${url}schedule?week_type=${weekType}&lang=${currentLanguage}`)
       .then((res:any) => res.data.data)
       .catch((err:any) => console.log(err))
   }
@@ -27,8 +27,8 @@ export default class JournalService{
     return this.wrapperGetRequest(`${url}schedule/time`)
       .then((res:any) => res.data.data)
   }
-  getUser(){
-    return this.wrapperGetRequest(`${url}users/current`)
+  getUser(currentLanguage:string){
+    return this.wrapperGetRequest(`${url}users/current?${currentLanguage}`)
     .then((user:any) => user.data.data)
     .catch((err) => {
       if(err.toString().includes('401')){
@@ -36,11 +36,11 @@ export default class JournalService{
       }
     })
   }
-  getAllUsers(){
+  getAllUsers(currentLanguage:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
       method: 'get',
-      url: `${url}users`,
+      url: `${url}users?lang=${currentLanguage}`,
       headers: this.header
     }).then((users:any) => {return users.data.data})
       .catch((err) => {return err})
@@ -71,12 +71,11 @@ export default class JournalService{
       throw new Error(err.response.data.error)
     })
   }
-  exportToExcel(dateFrom:any, dateTo:any){
+  exportToExcel(dateFrom:any, dateTo:any, currentLanguage:string){
     const data = {dateFrom, dateTo}
-    console.log(data);
     return axios({
       method: 'post',
-      url: `${url}registry/report`,
+      url: `${url}registry/report?lang=${currentLanguage}`,
       headers: this.header,
       responseType: 'blob',
       data
@@ -102,11 +101,11 @@ export default class JournalService{
       data: {email, role, username},
     })
   }
-  getRegistry(date:any){
+  getRegistry(date:any, currentLanguage:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
       method: 'get',
-      url: `${url}registry?date=${date}`,
+      url: `${url}registry?date=${date}&lang=${currentLanguage}`,
       headers: this.header
     }).then((res:any) => res.data.data)
   }
@@ -119,11 +118,11 @@ export default class JournalService{
       data: data
     }) 
   }
-  getSubjects(){
+  getSubjects(currentLanguage: string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
       method: 'get',
-      url: `${url}subjects`,
+      url: `${url}subjects?${currentLanguage}`,
       headers: this.header
     }).then((res:any) => res.data.data)
   }

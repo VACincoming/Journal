@@ -18,7 +18,7 @@ const initialState:IInitialState = {
   scheduleTime: [],
   registry: [],
   subjects: [],
-  language: 'en'
+  language: 'ua'
 }
 
 const reducer = (state:any = initialState, action:any) => {

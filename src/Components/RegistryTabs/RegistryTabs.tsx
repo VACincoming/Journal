@@ -66,7 +66,7 @@ export default function RegistryTabs(props:any) {
   const { t } = useTranslation()
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const {users, role, exportToExcel} = props
+  const {users, role, exportToExcel, language} = props
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };

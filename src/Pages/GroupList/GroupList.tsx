@@ -11,7 +11,7 @@ import RegistryTabs from '../../Components/RegistryTabs'
 import moment from 'moment'
 function GroupList(props:any){
   const { t } = useTranslation()
-  const {fetchGetAllUsers, users, user, fetchRegistry, registry} = props
+  const {fetchGetAllUsers, users, user, fetchRegistry, registry, language} = props
   let activeComponent = null
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function GroupList(props:any){
   }, [fetchGetAllUsers])
   useEffect(() => {
     fetchRegistry(moment().format('YYYY-MM-DD'))
-  }, [])
+  }, [fetchRegistry])
 
   if(user && user.role === "MONITOR"){
     activeComponent = 
@@ -27,13 +27,13 @@ function GroupList(props:any){
       users={users}
       registry={registry}
       role={user.role}
-      exportToExcel={(dateFrom:any, dateTo:any) => props.journalService.exportToExcel(dateFrom, dateTo)}
+      exportToExcel={(dateFrom:any, dateTo:any) => props.journalService.exportToExcel(dateFrom, dateTo, language)}
     />
   }else if(user && user.role === 'ADMIN'){
     activeComponent = <RegistryTabs
                         users={users}
                         role={user.role}
-                        exportToExcel={(dateFrom:any, dateTo:any) => props.journalService.exportToExcel(dateFrom, dateTo)}
+                        exportToExcel={(dateFrom:any, dateTo:any) => props.journalService.exportToExcel(dateFrom, dateTo, language)}
                       />
   }else activeComponent = <GroupListTable users={users}/>
   return(
@@ -62,7 +62,8 @@ const mapStateToProps = (state:any) => {
       loading: state.loading,
       users: state.users,
       schedule: state.schedule,
-      registry: state.registry
+      registry: state.registry,
+      language: state.language
     }
   }else return {state}
 }

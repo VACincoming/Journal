@@ -27,7 +27,7 @@ const EditMemberModal: React.FC<any> = props => {
   }
   useEffect(() => {
     setFilterArray(users);
-  }, [])
+  }, [users])
   useEffect(() => {
     search(searchText)
   }, [search, searchText])

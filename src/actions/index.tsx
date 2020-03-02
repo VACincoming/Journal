@@ -1,5 +1,5 @@
 import {IUser, IUsers, ISchedule, IScheduleTime, IRegistry, ISubjects} from '../interfaces/Interfaces'
-
+let currentLanguage:string = "ua"
 const userLoaded = (newUser:IUser) => {
   return{
     type: 'FETCH_USER_SUCCESS',
@@ -41,30 +41,31 @@ const subjectsLoaded = (subjects:ISubjects) => {
   }
 }
 const changeLanguage = (language:string) => {
+  currentLanguage = language;
   return {
     type: "FETCH_LANGUAGE_SUCCESS",
     payload: language
   }
 }
 const fetchSubjects = (journalService:any) => () => (dispatch:any) => {
-  return journalService.getSubjects()
+  return journalService.getSubjects(currentLanguage)
     .then((subjects:any) => dispatch(subjectsLoaded(subjects)))
 }
 const fetchRegistry = (journalService:any) => (date:string) => (dispatch:any) => {
-  return journalService.getRegistry(date)
+  return journalService.getRegistry(date, currentLanguage)
     .then((registry:any) => dispatch(registryLoaded(registry)))
 }
 const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
-  return journalService.getAllUsers()
+  return journalService.getAllUsers(currentLanguage)
     .then((users:IUsers) => dispatch(allUsersLoaded(users)))
 }
 const fetchGetUser = (journalService:any) => () => (dispatch:any) => {
-    return journalService.getUser()
+    return journalService.getUser(currentLanguage)
       .then((user:any) => dispatch(userLoaded(user)))
       .catch((err:any) => console.log(err))
 }
 const fetchSchedule = (journalService:any) => (weekType:string) => (dispatch:any) => {
-  return journalService.getSchedule(weekType)
+  return journalService.getSchedule(weekType, currentLanguage)
     .then((schedule:any) => dispatch(scheduleSuccess(schedule)))
     .catch((err:any) => console.log(err))
 }
