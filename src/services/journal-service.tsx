@@ -71,7 +71,26 @@ export default class JournalService{
       throw new Error(err.response.data.error)
     })
   }
-
+  exportToExcel(dateFrom:any, dateTo:any){
+    const data = {dateFrom, dateTo}
+    console.log(data);
+    return axios({
+      method: 'post',
+      url: `${url}registry/report`,
+      headers: this.header,
+      responseType: 'blob',
+      data
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${dateFrom} - ${dateTo}.xls`); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    }).catch((err:any) => {
+      console.log(err)
+    })
+  }
   changeRole(id:number, role:string, email:string, username:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     if(role === 'STUDENT') role="MONITOR"
