@@ -8,7 +8,7 @@ import img3 from '../../assets/img/mainPageImg3.jpg'
 
 
 function MainPageContent(props:any){
-  const {text} = props
+  const {text, mainTitle} = props
   return(
       <Grid container className='mainPageContent-wrapper'>
         <Grid item xs={4}>
@@ -24,6 +24,7 @@ function MainPageContent(props:any){
           </Grid>
         </Grid>
         <Grid item xs={4}>
+          <h2 style={{textAlign: 'center', marginTop: 0}}>{mainTitle}</h2>
           {text}
         </Grid>
         <Grid item xs={4}>

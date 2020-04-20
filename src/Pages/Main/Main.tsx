@@ -9,7 +9,7 @@ function Main(props:any){
   return(
     <React.Fragment>
       <Header title={t('MainPage')}/>
-      <MainPageContent text={t('Text')}/>
+      <MainPageContent text={t('Text')} mainTitle={t('MainTitle')}/>
     </React.Fragment>
   )
 }
