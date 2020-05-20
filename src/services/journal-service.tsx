@@ -28,7 +28,7 @@ export default class JournalService{
       .then((res:any) => res.data.data)
   }
   getUser(currentLanguage:string){
-    return this.wrapperGetRequest(`${url}users/current?${currentLanguage}`)
+    return this.wrapperGetRequest(`${url}users/current?lang=${currentLanguage}`)
     .then((user:any) => user.data.data)
     .catch((err) => {
       if(err.toString().includes('401')){
@@ -117,6 +117,14 @@ export default class JournalService{
       headers: this.header,
       data: data
     }) 
+  }
+  getUserAbsent(dateFrom:any, dateTo:any, currentLanguage:string){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'get',
+      url: `${url}registry/user?dateFrom=${dateFrom}&dateTo=${dateTo}&lang=${currentLanguage}`,
+      headers: this.header
+    }).then((res:any) => res.data.data)
   }
   getSubjects(currentLanguage: string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();

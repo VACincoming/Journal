@@ -12,6 +12,7 @@ import { withJournalService } from '../../hoc';
 import {fetchUserRequest} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles({
   orangeAvatar: {
     margin: 10,
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
 
 function Header(props:any){
   const classes = useStyles();
-  const {title, pages, fetchUserRequest} = props
+  const {title, pages, fetchUserRequest, user} = props
   let history = useHistory();
   function logOut(){
     fetchUserRequest()
@@ -42,7 +43,9 @@ function Header(props:any){
       <LeftSideMenu pages={pages}/>
       <h1 style={{marginLeft: '40px'}}>{title}</h1>
       <div className='rightHeaderWrapper'>
-        <Avatar className={classes.orangeAvatar}>AN</Avatar>
+        <Link to='/myProfile'>
+          <Avatar className={classes.orangeAvatar}>{user && user.firstName[0] + user.lastName[0]}</Avatar>
+        </Link>
         <LangSwitcher />
         <Icon className="fas fa-power-off pointer" onClick={logOut}/>
       </div>
@@ -55,9 +58,9 @@ const mapDispatchToProps = (dispatch:any) => {
     fetchUserRequest: fetchUserRequest()
   }, dispatch)
 }
-/* const mapStateToProps = ({user}:{user:any}) => {
+const mapStateToProps = ({user}:{user:any}) => {
   return {user}
-} */
+}
 
 export default withJournalService()(
-  connect(null, mapDispatchToProps)(Header))
+  connect(mapStateToProps, mapDispatchToProps)(Header))

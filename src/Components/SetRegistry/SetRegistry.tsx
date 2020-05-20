@@ -48,7 +48,7 @@ function SetRegistry(props:any){
       let allData = {
         registry,
         subjectId
-      } 
+      }
       journalService.setRegistry(allData)
     }
   }

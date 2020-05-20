@@ -9,7 +9,7 @@ import Logo from '../../assets/img/logo.png'
 import TextField from '@material-ui/core/TextField'
 import {useHistory} from 'react-router-dom'
 import { withJournalService } from '../../hoc';
-import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff, fetchUserRequest} from '../../actions'
+import {fetchUserLoaded, fetchLoaderOn, fetchLoaderOff, fetchUserRequest, fetchGetUser} from '../../actions'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -54,7 +54,7 @@ function SignIn(props:any) {
   const [isError, setIsError] = useState(false)
   const [errorText, setErrorText] = useState(null)
   const [isLoading, setIsLoading] = useState('')
-  const {fetchUserLoaded, journalService} = props
+  const {fetchUserLoaded, journalService, fetchGetUser} = props
   React.useEffect(() => {
     fetchUserRequest()
   }, [])
@@ -63,6 +63,7 @@ function SignIn(props:any) {
     try{
       let user = await journalService.signIn(login, password)
       await fetchUserLoaded({"username": user.username, "role": user.role})
+      await fetchGetUser()
       setIsLoading('')
       history.push("/main")
     }catch(err){
@@ -134,8 +135,10 @@ function SignIn(props:any) {
   );
 }
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch:any, ownProps:any) => {
+  const {journalService} = ownProps;
   return bindActionCreators({
+    fetchGetUser: fetchGetUser(journalService),
     fetchUserLoaded: fetchUserLoaded(),
     fetchLoaderOn: fetchLoaderOn(),
     fetchLoaderOff: fetchLoaderOff(),

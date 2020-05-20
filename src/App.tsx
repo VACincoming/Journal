@@ -10,6 +10,7 @@ import Main from './Pages/Main'
 import AdminTools from './Pages/AdminTools'
 import { withJournalService } from './hoc'
 import ActivationPage from './Pages/ActiovationPage'
+import myProfile from './Pages/myProfile'
 import SuccessActivation from './Pages/SuccessActivation'
 import ProtectedRoute from './ProtectedRoute'
 import { bindActionCreators } from 'redux'
@@ -35,6 +36,7 @@ const App = (props:any) => {
             <ProtectedRoute path='/grouplist' Component={GroupList}/>
             <ProtectedRoute path='/schedule' Component={Schedule}/>
             <ProtectedRoute path='/adminTools' Component={AdminTools}/>
+            <ProtectedRoute path='/myProfile' Component={myProfile} />
             <Route path='/activationPage'><ActivationPage/></Route>
             <Route path='/successActivation'><SuccessActivation/></Route>
           </> : <Spinner/>

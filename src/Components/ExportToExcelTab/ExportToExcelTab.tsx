@@ -10,7 +10,9 @@ import {
 } from '@material-ui/pickers';
 
 import './exportToExcelTab.css'
+import {useTranslation} from "react-i18next";
 const ExportToExcelTab = (props:any) => {
+  const { t } = useTranslation();
   const {exportToExcel, language} = props;
   const [firstSelectedDate, setFirstSelectedDate] = useState(moment().subtract(7, 'days').calendar());
   const [secondSelectedDate, setSecondSelectedDate] = useState(moment().format('MM-DD-YYYY'));
@@ -42,7 +44,7 @@ const ExportToExcelTab = (props:any) => {
               autoOk
               variant="inline"
               inputVariant="outlined"
-              label="Date From"
+              label={t('DateFrom')}
               format="DD/MM/YYYY"
               value={firstSelectedDate}
               InputAdornmentProps={{ position: "start" }}
@@ -52,7 +54,7 @@ const ExportToExcelTab = (props:any) => {
               autoOk
               variant="inline"
               inputVariant="outlined"
-              label="Date To"
+              label={t('DateTo')}
               format="DD/MM/YYYY"
               value={secondSelectedDate}
               InputAdornmentProps={{ position: "start" }}
@@ -66,7 +68,7 @@ const ExportToExcelTab = (props:any) => {
             disabled={!isRangeTrue}
             onClick={() => exportToExcel(moment(firstSelectedDate).format('YYYY-MM-DD'), moment(secondSelectedDate).format('YYYY-MM-DD'))}
           >
-          Export
+            {t('Download')}
         </Button>
       </Grid>
     </Grid>

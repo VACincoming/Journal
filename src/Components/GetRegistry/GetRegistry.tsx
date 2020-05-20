@@ -10,12 +10,14 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 import SubjectSelect from '../SubjectSelect'
 import GetRegistryTable from '../GetRegistryTable'
+import {useTranslation} from "react-i18next";
 interface IGetRegistry{
   fetchRegistry: any,
   registry: any
 }
 
 const GetRegistry:React.FC<IGetRegistry> = ({fetchRegistry, registry}) => {
+  const { t } = useTranslation();
   const [subjectsArray, setSubjectsArray] = useState([])
   const [subjectId, setSubjectId] = useState(null)
   const [selectedDate, setSelectedDate] = React.useState(moment().format('YYYY-MM-DD'));
@@ -62,7 +64,7 @@ const GetRegistry:React.FC<IGetRegistry> = ({fetchRegistry, registry}) => {
   if(isError){
     activeElement = 
       <Grid container justify='center' alignItems='center'>
-        <h3>Choose subject!!!</h3>
+        <h3>{t('SetRegistryError')}</h3>
       </Grid>
   }
   useEffect(() => {
@@ -79,7 +81,7 @@ const GetRegistry:React.FC<IGetRegistry> = ({fetchRegistry, registry}) => {
     <Grid container justify='center' alignItems='center' style={{marginTop: '30px'}}>
       <Calendar selectedDate={selectedDate} changeDate={(date:any) => changeDate(date)}/>
       <SubjectSelect subjects={subjectsArray} changeSubjectId={(id:any)=>changeSubjectId(id)}/>
-      <Button variant='contained' color='primary' onClick={onApply} className='ApplyBtn'>APPLY</Button>
+      <Button variant='contained' color='primary' onClick={onApply} className='ApplyBtn'>{t('Apply')}</Button>
     </Grid>
   }else {
     mainContent = 
