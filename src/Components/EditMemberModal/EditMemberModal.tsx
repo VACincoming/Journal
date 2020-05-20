@@ -8,7 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import {useTranslation} from "react-i18next";
 
 const EditMemberModal: React.FC<any> = props => {
-  const {onClose, open, users, handleChangeRole, loading} = props
+  const {onClose, open, users, handleChangeRole, handleDeleteUser, loading} = props
   const handleClose = () => {
     onClose()
     setSearchText('');
@@ -37,6 +37,10 @@ const EditMemberModal: React.FC<any> = props => {
     await handleChangeRole(id, role, email, username)
     onSearch(searchText)
   }
+  async function deleteUser(id:number){
+    await handleDeleteUser(id)
+    onSearch(searchText)
+  }
   elements = (
     users && users.length > 0 ?
     <>
@@ -56,6 +60,7 @@ const EditMemberModal: React.FC<any> = props => {
             <div className='listItemWrapper' key={user.id}>
               <h4>{user.firstName} {user.lastName}</h4>
               <Button variant="contained" className="blueBtn" onClick={()=>changeRole(user.id, user.role, user.email, user.username)}>{t('ChangeRole')}</Button>
+              <Button variant="contained" className="blueBtn" onClick={()=>deleteUser(user.id)}>Delete</Button>
             </div>
           )
         })

@@ -126,6 +126,14 @@ export default class JournalService{
       headers: this.header
     }).then((res:any) => res.data.data)
   }
+  deleteUser(id:number){
+    this.header.Authorization = localStorage.getItem("Token")!.toString();
+    return axios({
+      method: 'delete',
+      url: `${url}users/${id}`,
+      headers: this.header
+    })
+  }
   getSubjects(currentLanguage: string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
