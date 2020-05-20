@@ -21,5 +21,9 @@
   "Odd": "ODD WEEK",
   "Even": "EVEN WEEK",
   "EditMember": "EDIT MEMBERS",
-  "ExportToExcel": "Export to Excel" 
+  "ExportToExcel": "Export to Excel",
+  "MyProfile": "My Profile",
+  "YourName": "Your name",
+  "YourUsername": "Your username",
+  "YourStatus": "Your status"
 }

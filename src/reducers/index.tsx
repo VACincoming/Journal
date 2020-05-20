@@ -8,6 +8,7 @@ interface IInitialState{
   registry: []
   subjects: []
   language: string
+  
 }
 const initialState:IInitialState = {
   user: [],

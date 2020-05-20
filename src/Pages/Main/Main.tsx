@@ -3,7 +3,8 @@ import Header from '../../Components/Header'
 import './main.css'
 import { useTranslation } from 'react-i18next'
 import MainPageContent from '../../Components/MainPageContent'
-function Main(props:any){
+
+function Main(){
   const { t } = useTranslation()
  
   return(

@@ -21,5 +21,9 @@
   "Odd": "Не парний тиждень",
   "Even": "Парний тиждень",
   "EditMember": "Редагувати учасників",
-  "ExportToExcel": "Експорт до Excel" 
+  "ExportToExcel": "Експорт до Excel" ,
+  "MyProfile": "Мій профіль",
+  "YourName": "Ваше ім`я",
+  "YourUsername": "Ваш юзернейм",
+  "YourStatus": "Ваш статус"
 }
