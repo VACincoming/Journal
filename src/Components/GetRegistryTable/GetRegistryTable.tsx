@@ -1,8 +1,10 @@
 import React from 'react'
 import './getRegistryTable.css'
 import Grid from '@material-ui/core/Grid'
+import {useTranslation} from "react-i18next";
 
 export default function GetRegistryTable(props:any){
+  const { t } = useTranslation();
   const {registry, subjectId} = props
   return(
     <Grid container justify='center' alignItems='center' direction='column' >
@@ -10,7 +12,7 @@ export default function GetRegistryTable(props:any){
           <table>
             <tbody>
               <tr>
-                <th>STUDENTS LIST</th>
+                <th>{t('StudentsList')}</th>
                 {
                   registry && registry.subjects.length > 0 && registry.subjects.filter((el:any) => el.subject.id === subjectId)
                     .map((el:any) => {
@@ -28,7 +30,7 @@ export default function GetRegistryTable(props:any){
                       return(
                         <tr key={user.id}>
                           <td>{user.firstName} {user.lastName}</td>
-                          <td>{user.isPresent === true ? <p style={{color: "#228477"}}>Present</p> :<p style={{color: "#ff5722"}}>Absent</p>}</td>
+                          <td>{user.isPresent === true ? <p style={{color: "#228477"}}>{t('Present')}</p> :<p style={{color: "#ff5722"}}>{t('Absent')}</p>}</td>
                         </tr>
                       )
                     })

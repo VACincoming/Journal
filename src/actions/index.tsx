@@ -40,6 +40,12 @@ const subjectsLoaded = (subjects:ISubjects) => {
     payload: subjects
   }
 }
+const userAbsents = (registry:IRegistry) => {
+  return{
+    type: "FETCH_USER_ABSENTS",
+    payload: registry
+  }
+}
 const changeLanguage = (language:string) => {
   currentLanguage = language;
   return {
@@ -54,6 +60,10 @@ const fetchSubjects = (journalService:any) => () => (dispatch:any) => {
 const fetchRegistry = (journalService:any) => (date:string) => (dispatch:any) => {
   return journalService.getRegistry(date, currentLanguage)
     .then((registry:any) => dispatch(registryLoaded(registry)))
+}
+const fetchUserAbsents = (journalService:any) => (dateFrom:string, dateTo:string) => (dispatch:any) => {
+  return journalService.getUserAbsent(dateFrom, dateTo, currentLanguage)
+      .then((registry:any) => dispatch(userAbsents(registry)))
 }
 const fetchGetAllUsers = (journalService:any) => () => (dispatch:any) => {
   return journalService.getAllUsers(currentLanguage)
@@ -98,6 +108,7 @@ export {
   fetchGetAllUsers,
   fetchGetUser,
   fetchSchedule,
+  fetchUserAbsents,
   fetchUserLoaded,
   fetchUserRequest,
   fetchLoaderOn,

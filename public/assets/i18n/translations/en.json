@@ -15,6 +15,16 @@
   "StudentsList": "STUDENTS LIST",
   "Mail": "Mail",
   "Absent": "Absent",
+  "Present": "Present",
+  "Calendar": "Calendar",
+  "DateFrom": "Date from",
+  "DateTo": "Date to",
+  "Download": "Download",
+  "ChangeRole": "Change role",
+  "LoadAbsents": "Load absents",
+  "Date": "Date",
+  "SubjectName": "Subject name",
+  "IsPresent": "Is present",
   "Send": "Send",
   "SetRegistryError": "You need to choose subject",
   "Success": "Success",
@@ -25,5 +35,9 @@
   "MyProfile": "My Profile",
   "YourName": "Your name",
   "YourUsername": "Your username",
-  "YourStatus": "Your status"
+  "YourStatus": "Your status",
+  "Admin": "Admin",
+  "Monitor": "Monitor",
+  "Student": "Student",
+  "Apply": "Apply"
 }

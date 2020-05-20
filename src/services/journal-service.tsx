@@ -118,17 +118,13 @@ export default class JournalService{
       data: data
     }) 
   }
-  getUserAbsent(dateFrom:any, dateTo:any, userId:any, currentLanguage:string){
+  getUserAbsent(dateFrom:any, dateTo:any, currentLanguage:string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
     return axios({
-      method: 'post',
-      url: `${url}registry/user?lang=${currentLanguage}`,
-      data: {
-        "from": dateFrom,
-        "to": dateTo,
-        "userId": userId, 
-      }
-    })
+      method: 'get',
+      url: `${url}registry/user?dateFrom=${dateFrom}&dateTo=${dateTo}&lang=${currentLanguage}`,
+      headers: this.header
+    }).then((res:any) => res.data.data)
   }
   getSubjects(currentLanguage: string){
     this.header.Authorization = localStorage.getItem("Token")!.toString();
