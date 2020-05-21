@@ -59,8 +59,10 @@ const EditMemberModal: React.FC<any> = props => {
           return(
             <div className='listItemWrapper' key={user.id}>
               <h4>{user.firstName} {user.lastName}</h4>
+              <div className='spaceAround'>
               <Button variant="contained" className="blueBtn" onClick={()=>changeRole(user.id, user.role, user.email, user.username)}>{t('ChangeRole')}</Button>
-              <Button variant="contained" className="blueBtn" onClick={()=>deleteUser(user.id)}>Delete</Button>
+              <Button variant="contained" className="redButton" onClick={()=>deleteUser(user.id)}>{t('Delete')}</Button>
+              </div>
             </div>
           )
         })
