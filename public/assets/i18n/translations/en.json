@@ -12,6 +12,7 @@
   "SetAbsent": "SET ABSENT",
   "GetAbsent": "GET ABSENT",
   "Subject": "Subject",
+  "Delete": "Delete",
   "StudentsList": "STUDENTS LIST",
   "Mail": "Mail",
   "Absent": "Absent",

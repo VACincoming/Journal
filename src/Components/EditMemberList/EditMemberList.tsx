@@ -51,6 +51,12 @@ const EditMemberList: React.FC<EditMemberListProps> = ({
       await fetchGetAllUsers()
       fetchLoaderOff()
     }
+  async function handleDeleteUser(id:number){
+      fetchLoaderOn()
+      await journalService.deleteUser(id)
+      await fetchGetAllUsers()
+      fetchLoaderOff()
+    }
   listItem = (
      member.map((el:any) => {
       return(
@@ -63,7 +69,7 @@ const EditMemberList: React.FC<EditMemberListProps> = ({
   return(
     <Fragment>
       {listItem}
-      <EditMemberModal loading={loading} open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers} handleChangeRole={(id:number, role:string, email:string, username:string) => handleChangeRole(id, role,email, username)}/>
+      <EditMemberModal loading={loading} open={openEditMemberModal} onClose={handleCloseEditMemberModal} users={selectedUsers} selectedMembers={selectedMembers} handleChangeRole={(id:number, role:string, email:string, username:string) => handleChangeRole(id, role,email, username)} handleDeleteUser={(id: number) => handleDeleteUser(id)}/>
     </Fragment>
   )
 }

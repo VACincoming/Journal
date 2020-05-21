@@ -36,3 +36,13 @@
     width: 90% !important;
   }
 }
+.spaceAround{
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.redButton{
+  background: #e20009 !important;
+  color: #fff !important;
+}
