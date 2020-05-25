@@ -37,6 +37,7 @@ const UserAbsent: React.FC<IGetRegistry> = ({fetchUserAbsents, userAbsents}) => 
         if (selectedDateFrom !== null && selectedDateTo !== null) {
             setIsVisible(true)
             setIsError(false)
+            fetchUserAbsents(selectedDateFrom, selectedDateTo)
         } else {
             setIsVisible(false)
             setIsError(true)
@@ -46,7 +47,7 @@ const UserAbsent: React.FC<IGetRegistry> = ({fetchUserAbsents, userAbsents}) => 
         console.log(fetchUserAbsents)
         activeElement =
             <Grid container justify='center' alignItems='center'>
-                <GetUserAbsentTable registry={userAbsents}/>
+                <GetUserAbsentTable userAbsents={userAbsents}/>
             </Grid>
     }
     if (isError) {
@@ -55,11 +56,7 @@ const UserAbsent: React.FC<IGetRegistry> = ({fetchUserAbsents, userAbsents}) => 
                 <h3>choose dates</h3>
             </Grid>
     }
-    useEffect(() => {
-        (async function fetchData() {
-            fetchUserAbsents(selectedDateFrom, selectedDateTo)
-        })()
-    }, [selectedDateTo, selectedDateFrom])
+
     {
 
         mainContent =
@@ -73,7 +70,6 @@ const UserAbsent: React.FC<IGetRegistry> = ({fetchUserAbsents, userAbsents}) => 
     }
     return (
         <>
-
             {mainContent}
             {activeElement}
 

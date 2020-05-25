@@ -5,8 +5,7 @@ import {useTranslation} from "react-i18next";
 
 export default function GetUserAbsentTable(props: any) {
     const {t} = useTranslation();
-    const {registry} = props
-    console.log(registry)
+    const {userAbsents} = props
     return (
         <Grid container justify='center' alignItems='center' direction='column'>
             <Grid item xs={12} className='tableWrapper'>
@@ -18,9 +17,9 @@ export default function GetUserAbsentTable(props: any) {
                         <th>{t('IsPresent')}</th>
                     </tr>
                     {
-                        registry.map((el: any) => {
+                        userAbsents.map((el: any) => {
                                         return (
-                                            <tr key={el.subjectName}>
+                                            <tr key={el.identifier}>
                                                 <td>{el.lessonDate}</td>
                                                 <td>{el.subjectName}</td>
                                                 <td>{el.isPresent === true ?
